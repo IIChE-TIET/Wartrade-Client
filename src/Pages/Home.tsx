@@ -1,12 +1,24 @@
 import styled from "@emotion/styled"
-import AboutEvent from "../Sections/AboutEvent"
-import HomeMain from "../Sections/Home"
+import { AnimatePresence } from "framer-motion"
+import { useState } from "react"
+import LoginModal from "../Components/Home/LoginModal"
+import AboutEvent from "../Sections/Home/AboutEvent"
+import HomeMain from "../Sections/Home/HomeMain"
+import Prizes from "../Sections/Home/Prizes"
+import Sponsors from "../Sections/Home/Sponsors"
 
 const Home = () => {
+  const [loginVis, setLoginVis] = useState(false)
+
   return (
     <StyledHome>
-      <HomeMain />
+      <HomeMain setLoginVis={setLoginVis} />
+      <AnimatePresence>
+        {loginVis && <LoginModal setLoginVis={setLoginVis} />}
+      </AnimatePresence>
       <AboutEvent />
+      <Prizes />
+      <Sponsors />
     </StyledHome>
   )
 }

@@ -1,12 +1,22 @@
 import styled from "@emotion/styled"
-import Countdown from "../Components/Home/Countdown"
-import homeBG from "./../Media/homeBG.webp"
-import iicheLogo from "./../Media/Logos/iiche.webp"
+import Countdown from "../../Components/Home/Countdown"
+//import homeBG from "./../../Media/homeBG.webp"
+import iicheLogo from "./../../Media/Logos/iiche.webp"
 
-const HomeMain = () => {
+const HomeMain: React.FC<{
+  setLoginVis: React.Dispatch<React.SetStateAction<boolean>>
+}> = ({ setLoginVis }) => {
+  const openModal = () => setLoginVis(true)
+
   return (
     <StyledHomeMain>
-      <img className="bg" src={homeBG} alt="home background depicting war" />
+      <img
+        className="bg"
+        src={
+          "https://images.unsplash.com/photo-1597521624282-e6e107174935?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80"
+        }
+        alt="home background depicting war"
+      />
       <header>
         <img className="logo" src={iicheLogo} alt="iiche logo" />
         <nav>
@@ -21,7 +31,7 @@ const HomeMain = () => {
       <main>
         <h1>WARTRADE 2.0</h1>
         <Countdown />
-        <button>LOGIN</button>
+        <button onClick={openModal}>LOGIN</button>
       </main>
     </StyledHomeMain>
   )
@@ -40,7 +50,7 @@ const StyledHomeMain = styled.section`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: blur(3px);
+    filter: blur(3px) saturate(120%);
   }
 
   header {
@@ -100,8 +110,8 @@ const StyledHomeMain = styled.section`
     z-index: 2;
 
     button {
-      padding: calc(var(--padding) / 2) var(--padding);
-      border-radius: 20px;
+      padding: calc(var(--padding) / 3) var(--padding);
+      border-radius: 10px;
       background: #dd7b2e;
       color: #fff;
       transition: all ease-out 200ms;
