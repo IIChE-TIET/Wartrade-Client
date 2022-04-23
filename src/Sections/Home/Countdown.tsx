@@ -1,7 +1,7 @@
 import styled from "@emotion/styled"
 import { useEffect, useState } from "react"
 
-const Countdown: React.FC = () => {
+const Countdown = () => {
   const countDownDate = new Date("MAY 01, 2022 14:00:00").getTime()
 
   const [days, setDays] = useState(0)
@@ -38,9 +38,10 @@ const Countdown: React.FC = () => {
       clearInterval(x)
     }
   }, [countDownDate])
+
   return (
     <StyledCountdown>
-      <h3>The Battle will Begin in...</h3>
+      <h1>The Battle will begin in...</h1>
       <div className="counter">
         <div>
           <span className="days">{days}</span>
@@ -65,29 +66,29 @@ const Countdown: React.FC = () => {
 
 const StyledCountdown = styled.section`
   width: 100%;
-  height: 35%;
+  height: 100vh;
 
+  color: #fff;
+  font-size: 5rem;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 4rem;
 
-  h3 {
-    color: #fff;
-    text-align: center;
-    font-size: clamp(1rem, 3vw, 2rem);
-    font-family: var(--normalFont);
-  }
+  position: relative;
+  z-index: 2;
+
   .counter {
     width: 55%;
-    height: 70%;
+    height: 20%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    background: linear-gradient(150deg, #d6d3d3aa, transparent);
+    background: linear-gradient(150deg, #3b4354, transparent);
 
-    border-radius: 20px;
+    border-radius: 15px;
     div {
       flex: 1;
       display: flex;

@@ -9,9 +9,9 @@ const GlobalStyle = () => {
     }
     :root {
       --padding: clamp(1.5rem, 3vw, 2.5rem);
-      --bg: #321f0f;
-      --bg: #1a0d0d;
-      --secondary: #264476;
+      --bg: #3e515d;
+      --secondary: #a66a6a;
+      --text: #e9e0e0;
       --headingFont: "Amaranth", sans-serif;
       --normalFont: "Open Sans", sans-serif;
     }
