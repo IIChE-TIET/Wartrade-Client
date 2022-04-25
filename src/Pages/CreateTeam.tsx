@@ -310,7 +310,7 @@ const StyledCreateTeam = styled.div`
         }
       }
       .right {
-        height: 65%;
+        height: 72%;
       }
     }
   }

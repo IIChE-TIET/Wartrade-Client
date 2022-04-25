@@ -295,7 +295,7 @@ const StyledJoinTeam = styled.div`
         width: 100%;
       }
       .left {
-        height: 65%;
+        height: 72%;
       }
       .right {
         height: 25%;
