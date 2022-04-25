@@ -54,6 +54,10 @@ const StyledHome = styled.div`
     background: rgb(black, 0.1);
     backdrop-filter: blur(150px);
   }
+
+  @media only screen and (max-width: 500px) {
+    backdrop-filter: blur(50px);
+  }
 `
 
 export default Home
