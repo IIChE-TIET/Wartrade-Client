@@ -34,6 +34,8 @@ const HomeMain: React.FC<{
 const StyledHomeMain = styled.section`
   width: 100%;
   height: 100vh;
+
+  --header: 12vh;
   position: relative;
   @media only screen and (max-width: 500px) {
     --header: 10vh;
