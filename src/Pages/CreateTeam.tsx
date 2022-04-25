@@ -214,7 +214,7 @@ const StyledCreateTeam = styled.div`
       place-items: center;
 
       background: #f97171;
-      padding: var(--padding);
+
       p {
         font-size: clamp(1.3rem, 5vw, 5rem);
         color: #fff;

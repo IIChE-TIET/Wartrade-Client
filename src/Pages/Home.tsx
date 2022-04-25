@@ -49,7 +49,8 @@ const StyledHome = styled.div`
   }
   .blur {
     position: absolute;
-    inset: 0;
+    width: 100%;
+    height: 500vh;
     background: rgb(black, 0.1);
     backdrop-filter: blur(150px);
   }

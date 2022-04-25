@@ -208,7 +208,7 @@ const StyledJoinTeam = styled.div`
       place-items: center;
       text-align: left;
       background: #f97171;
-      padding: var(--padding);
+
       p {
         font-size: clamp(1.5rem, 5vw, 5rem);
         color: #fff;
