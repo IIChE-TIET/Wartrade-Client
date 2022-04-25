@@ -13,22 +13,23 @@ const StyledSponsors = styled.section`
   width: 100%;
   height: 100vh;
 
-  color: #fff;
+  color: var(--text);
   font-size: 5rem;
-  display: grid;
-  place-items: center;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
   position: relative;
   z-index: 2;
 
-  font-size: 6rem;
-
-  h1 {
-    font-size: 1em;
-  }
+  font-size: clamp(1.3rem, 2vw, 2rem);
+  padding: var(--padding);
   h4 {
+    width: 100%;
     font-family: var(--normalFont);
-    font-size: 0.5em;
+    font-size: 1.8em;
+    text-align: center;
   }
 `
 

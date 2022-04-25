@@ -7,12 +7,10 @@ const Modal: React.FC<{
   return (
     <StyledModal>
       <div className="modal">
-        <div className="content">
-          <h3>{message}</h3>
-          <span>
-            <Link to="/">LOGIN</Link> to Access the Guild Dashboard
-          </span>
-        </div>
+        <h3>{message}</h3>
+        <span>
+          <Link to="/">LOGIN</Link> to Access the Guild Dashboard
+        </span>
       </div>
     </StyledModal>
   )
@@ -27,18 +25,21 @@ const StyledModal = styled.section`
   display: grid;
   place-items: center;
   background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
   z-index: 100;
   .modal {
     position: relative;
     padding: calc(0.8 * var(--padding));
     overflow: hidden;
-    width: 45%;
+    width: 40%;
     height: 45%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
+    flex-direction: column;
     border-radius: 10px;
-    background: #256;
+    background: linear-gradient(135deg, #3da5c8, #16495a);
+    color: var(--text);
     h3 {
       font-size: clamp(1.5rem, 3vw, 2rem);
     }
@@ -47,7 +48,7 @@ const StyledModal = styled.section`
         text-decoration: underline;
         font-weight: 100;
         &:hover {
-          color: #fff;
+          color: #000;
         }
       }
       font-size: clamp(1rem, 3vw, 1.5rem);

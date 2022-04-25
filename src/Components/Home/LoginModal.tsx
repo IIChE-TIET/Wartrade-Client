@@ -1,10 +1,25 @@
 import styled from "@emotion/styled"
 import { motion, Variants } from "framer-motion"
-import React from "react"
+import React, { useState } from "react"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import loginAPI from "../../API/login.api"
+import { login } from "../../Redux/Slices/authentication.slice"
+import { addteam } from "../../Redux/Slices/team.slice"
+import Spinner from "../Loaders/spinner"
 
 const LoginModal: React.FC<{
   setLoginVis: React.Dispatch<React.SetStateAction<boolean>>
 }> = ({ setLoginVis }) => {
+  const [input, setInput] = useState({
+    teamName: "",
+    password: "",
+  })
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+
+  const dispatch = useDispatch()
   const closeModal = () => setLoginVis(false)
 
   const formClickHandler = (e: React.MouseEvent) => {
@@ -29,6 +44,28 @@ const LoginModal: React.FC<{
     },
   }
 
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setInput(input => ({ ...input, [e.target.name]: e.target.value }))
+
+  const submitHandler = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      setLoading(true)
+      const team = await loginAPI(input)
+      dispatch(login())
+      dispatch(addteam(team))
+      navigate("/dashboard")
+    } catch (err: any) {
+      if (err.response && err.response.data && err.response.data.message)
+        setError(err.response.data.message)
+      else setError("We Encountered an Error. Try Agin Later")
+      setTimeout(() => setError(""), 3000)
+      console.log(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <StyledLoginModal
       variants={variants}
@@ -37,21 +74,36 @@ const LoginModal: React.FC<{
       exit="exit"
       onClick={closeModal}
     >
+      {loading && <Spinner />}
       <div className="modal" onClick={formClickHandler}>
         <div className="left">
           <h4>Ready to Roll</h4>
         </div>
         <div className="right">
-          <form>
+          <form onSubmit={submitHandler}>
+            {error && <div className="error">{error}</div>}
             <div className="inputContainer">
               <label htmlFor="teamName">Your Team Name</label>
               <br />
-              <input name="teamName" autoFocus type="text" required />
+              <input
+                value={input.teamName}
+                onChange={changeHandler}
+                name="teamName"
+                autoFocus
+                type="text"
+                required
+              />
             </div>
             <div className="inputContainer">
               <label htmlFor="password">Password</label>
               <br />
-              <input name="password" type="password" required />
+              <input
+                value={input.password}
+                onChange={changeHandler}
+                name="password"
+                type="password"
+                required
+              />
             </div>
             <span>Forgot Password?</span>
             <button>Login</button>
@@ -80,7 +132,7 @@ const StyledLoginModal = styled(motion.section)`
     width: 50%;
     height: 60%;
 
-    background: #ff8c32;
+    background: var(--bg);
 
     border-radius: 20px;
 
@@ -93,7 +145,7 @@ const StyledLoginModal = styled(motion.section)`
       display: grid;
       place-items: center;
       padding: var(--padding);
-      background: #06113c;
+      background: var(--secondary);
       color: #fff;
       h4 {
         max-width: min-content;
@@ -115,6 +167,12 @@ const StyledLoginModal = styled(motion.section)`
         justify-content: center;
         align-items: flex-start;
         gap: 1rem;
+
+        .error {
+          font-size: 0.9rem;
+          color: red;
+          opacity: 0.9;
+        }
         .inputContainer {
           width: 100%;
         }

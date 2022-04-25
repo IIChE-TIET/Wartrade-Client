@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 import { Link } from "react-router-dom"
-import iicheLogo from "./../Media/Logos/iiche.webp"
+import Header from "../Components/Header"
 
 const Register = () => {
   return (
@@ -10,19 +10,7 @@ const Register = () => {
         className="bg"
         alt=""
       />
-      <header>
-        <img src={iicheLogo} className="logo" alt="iichelogo" />
-        <nav>
-          <ul>
-            <li>PRIZES</li>
-            <li>SPONSORS</li>
-            <li>CONTACT</li>
-          </ul>
-          <Link to="/">
-            <button>Login</button>
-          </Link>
-        </nav>
-      </header>
+      <Header type="REGISTER" />
       <main>
         <Link to="/create">
           <div>
@@ -44,6 +32,9 @@ const StyledRegister = styled.section`
   height: 100vh;
   position: relative;
   --header: 12vh;
+  @media only screen and (max-width: 500px) {
+    --header: 10vh;
+  }
 
   .bg {
     position: absolute;
@@ -52,62 +43,6 @@ const StyledRegister = styled.section`
     height: 100%;
     object-fit: cover;
     filter: blur(5px);
-  }
-
-  header {
-    width: 100%;
-    height: var(--header);
-    padding: calc(var(--padding) / 2) var(--padding);
-
-    position: relative;
-    z-index: 2;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .logo {
-      height: 100%;
-      object-fit: cover;
-    }
-    nav {
-      display: flex;
-      align-items: center;
-      ul {
-        display: flex;
-        gap: var(--padding);
-        li {
-          color: #fff;
-          cursor: pointer;
-          transition: transform ease-out 200ms;
-          &:hover {
-            transform: scale(1.2);
-          }
-        }
-      }
-      button {
-        margin-left: calc(2 * var(--padding));
-        padding: calc(var(--padding) / 4);
-        border-radius: 5px;
-        background: #fff;
-        color: #000;
-        transition: all ease-out 200ms;
-        position: relative;
-
-        &::before {
-          content: "";
-          position: absolute;
-          top: 50%;
-          left: calc(-1 * var(--padding));
-          display: block;
-
-          width: 2px;
-          height: 70%;
-          background: #fff;
-          transform: translateY(-50%);
-        }
-      }
-    }
   }
 
   main {
@@ -122,10 +57,15 @@ const StyledRegister = styled.section`
     position: relative;
     z-index: 2;
 
+    @media only screen and (max-width: 500px) {
+      flex-direction: column;
+    }
+
     > * {
       width: 30%;
       aspect-ratio: 1/1;
       background: #d4010a87;
+      color: var(--text);
       position: relative;
       backdrop-filter: blur(5px);
       transition: all ease 200ms;
@@ -133,6 +73,10 @@ const StyledRegister = styled.section`
       display: grid;
       place-items: center;
       cursor: pointer;
+
+      @media only screen and (max-width: 500px) {
+        width: 75%;
+      }
 
       &::before {
         content: "";
@@ -161,7 +105,7 @@ const StyledRegister = styled.section`
       }
 
       span {
-        font-size: 3rem;
+        font-size: clamp(1.5rem, 4vw, 3rem);
         text-align: center;
         font-weight: 700;
         width: min-content;

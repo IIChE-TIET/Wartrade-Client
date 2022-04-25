@@ -46,7 +46,8 @@ const GlobalStyle = () => {
     }
 
     h1 {
-      font-size: clamp(2rem, 5vw, 4rem);
+      font-size: clamp(2em, 5vw, 4em);
+      text-align: center;
     }
     h1,
     h2,

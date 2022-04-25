@@ -1,28 +1,15 @@
 import styled from "@emotion/styled"
-import { Link } from "react-router-dom"
-import iicheLogo from "./../../Media/Logos/iiche.webp"
+import Header from "../../Components/Header"
 import wartradeLogo from "./../../Media/Logos/wartradeLogo.webp"
 
 const HomeMain: React.FC<{
   setLoginVis: React.Dispatch<React.SetStateAction<boolean>>
 }> = ({ setLoginVis }) => {
-  const openModal = () => setLoginVis(true)
+  const openModal = () => setLoginVis(!true)
 
   return (
     <StyledHomeMain>
-      <header>
-        <img src={iicheLogo} className="logo" alt="iichelogo" />
-        <nav>
-          <ul>
-            <li>PRIZES</li>
-            <li>SPONSORS</li>
-            <li>CONTACT</li>
-          </ul>
-          <Link to="/register">
-            <button>REGISTER</button>
-          </Link>
-        </nav>
-      </header>
+      <Header type="HOME" />
       <main>
         <div className="content">
           <h1>WARTRADE 2.0</h1>
@@ -34,7 +21,9 @@ const HomeMain: React.FC<{
             fugit doloremque quam temporibus quo veritatis ipsum quod?
             Consectetur.
           </p>
-          <button onClick={openModal}>Login</button>
+          <button onClick={openModal} className="disabled" disabled>
+            Login
+          </button>
         </div>
         <img src={wartradeLogo} alt="wartrade logo" className="wartradeLogo" />
       </main>
@@ -46,63 +35,11 @@ const StyledHomeMain = styled.section`
   width: 100%;
   height: 100vh;
   position: relative;
-  --header: 12vh;
-
-  header {
-    width: 100%;
-    height: var(--header);
-    padding: calc(var(--padding) / 2) var(--padding);
-
-    position: relative;
-    z-index: 2;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .logo {
-      height: 100%;
-      object-fit: cover;
-    }
-    nav {
-      display: flex;
-      align-items: center;
-      ul {
-        display: flex;
-        gap: var(--padding);
-        li {
-          color: #fff;
-          cursor: pointer;
-          transition: transform ease-out 200ms;
-          &:hover {
-            transform: scale(1.2);
-          }
-        }
-      }
-      button {
-        margin-left: calc(2 * var(--padding));
-        padding: calc(var(--padding) / 4);
-        border-radius: 5px;
-        background: #fff;
-        color: #000;
-        transition: all ease-out 200ms;
-        position: relative;
-
-        &::before {
-          content: "";
-          position: absolute;
-          top: 50%;
-          left: calc(-1 * var(--padding));
-          display: block;
-
-          width: 2px;
-          height: 70%;
-          background: #fff;
-          transform: translateY(-50%);
-        }
-      }
-    }
+  @media only screen and (max-width: 500px) {
+    --header: 10vh;
   }
+
+  overflow: hidden;
 
   main {
     width: 100%;
@@ -116,38 +53,60 @@ const StyledHomeMain = styled.section`
     position: relative;
     z-index: 2;
 
+    @media only screen and (max-width: 500px) {
+      flex-direction: column-reverse;
+      justify-content: center;
+      gap: 2rem;
+      padding: calc(var(--padding));
+      > * {
+        width: 100%;
+      }
+    }
+
     .content {
       width: 50%;
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
       align-items: flex-start;
-      gap: 2rem;
+      gap: clamp(1rem, 2vw, 2rem);
 
       color: var(--text);
+
       h1 {
-        font-size: 5rem;
+        font-size: clamp(2rem, 5vw, 5rem);
         font-weight: 900;
       }
       p {
-        font-size: 1.3rem;
+        font-size: clamp(0.9rem, 2vw, 1.5rem);
         line-height: 1.5;
       }
 
       button {
         padding: calc(var(--padding) / 3) var(--padding);
+        font-size: clamp(0.8rem, 1.5vw, 1.5rem);
         border-radius: 5px;
         background: #d3c468;
         color: #000;
         transition: all ease-out 200ms;
+
         &:hover {
           color: #dd7b2e;
           background: #fff;
         }
       }
+
+      .disabled {
+        filter: saturate(50%);
+        cursor: no-drop !important;
+      }
+
+      @media only screen and (max-width: 500px) {
+        width: 100%;
+      }
     }
     .wartradeLogo {
-      width: 30%;
+      width: clamp(180px, 30%, 600px);
       object-fit: cover;
       filter: contrast(60%) saturate(90%);
     }

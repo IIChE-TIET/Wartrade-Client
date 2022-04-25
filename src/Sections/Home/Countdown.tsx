@@ -68,8 +68,8 @@ const StyledCountdown = styled.section`
   width: 100%;
   height: 100vh;
 
-  color: #fff;
-  font-size: 5rem;
+  color: var(--text);
+  font-size: 1.3rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,9 +79,12 @@ const StyledCountdown = styled.section`
   position: relative;
   z-index: 2;
 
+  padding: var(--padding);
+  overflow: hidden;
+
   .counter {
     width: 55%;
-    height: 20%;
+    height: clamp(90px, 18%, 400px);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -95,10 +98,14 @@ const StyledCountdown = styled.section`
       flex-direction: column;
       justify-content: space-evenly;
       align-items: center;
-      font-size: 1.75rem;
+      font-size: clamp(1rem, 2vw, 1.75rem);
       & + div {
         border-left: 1px solid #fff4;
       }
+    }
+
+    @media only screen and (max-width: 500px) {
+      width: 100%;
     }
   }
 `

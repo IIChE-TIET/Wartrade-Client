@@ -1,9 +1,9 @@
 import styled from "@emotion/styled"
 import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import createTeamAPI from "../API/createTeam.api"
+import Header from "../Components/Header"
 import Spinner from "../Components/Loaders/spinner"
 import Modal from "../Components/Register/Modal"
-import iicheLogo from "./../Media/Logos/iiche.webp"
 
 const CreateTeam = () => {
   const [page, setPage] = useState(1)
@@ -22,7 +22,7 @@ const CreateTeam = () => {
   })
 
   useEffect(() => {
-    document.title = "ABSCOND • CREATE"
+    document.title = "WARTRADE • CREATE"
   })
 
   const changePage = (pageNumber: number) => setPage(pageNumber)
@@ -33,17 +33,28 @@ const CreateTeam = () => {
       [e.target.name]: e.target.value,
     }))
 
+  const genPayload = () => ({
+    teamName: input.teamName,
+    password: input.password,
+    leader: {
+      name: input.name,
+      email: input.email,
+      phone: input.phone,
+      branch: input.branch,
+      year: input.year,
+    },
+  })
+
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError("")
     setSuccess(false)
     setLoading(true)
     try {
+      const res = await createTeamAPI(genPayload())
+      console.log(res)
       setSuccess(true)
-      setLoading(false)
-    } catch (error: any) {
-      setLoading(false)
-      console.log(error.response)
+    } catch (err: any) {
       setPage(1)
       setInput({
         teamName: "",
@@ -54,29 +65,21 @@ const CreateTeam = () => {
         branch: "",
         year: "",
       })
-      if (error.response.data.message) {
-        return setError(error.response.data.message)
-      } else console.log("Error", error.message)
-      return setError("We encountered an Error please try again later")
+
+      if (err.response && err.response.data && err.response.data.message)
+        setError(err.response.data.message)
+      else setError("We Encountered an Error. Try Agin Later")
+      setTimeout(() => setError(""), 3000)
+      console.log(err)
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
     <StyledCreateTeam>
       {loading && <Spinner />}
-      <header>
-        <img src={iicheLogo} className="logo" alt="iichelogo" />
-        <nav>
-          <ul>
-            <li>PRIZES</li>
-            <li>SPONSORS</li>
-            <li>CONTACT</li>
-          </ul>
-          <Link to="/">
-            <button>Login</button>
-          </Link>
-        </nav>
-      </header>
+      <Header type="REGISTER" />
       <main>
         <div className=" left">
           <p>
@@ -117,7 +120,6 @@ const CreateTeam = () => {
                     onChange={changeHandler}
                     name="password"
                     required
-                    autoFocus
                   />
                 </div>
 
@@ -188,64 +190,11 @@ const StyledCreateTeam = styled.div`
   height: 100vh;
   position: relative;
   --header: 12vh;
+  @media only screen and (max-width: 500px) {
+    --header: 10vh;
+  }
 
   background: #385a7c;
-
-  header {
-    width: 100%;
-    height: var(--header);
-    padding: calc(var(--padding) / 2) var(--padding);
-
-    position: relative;
-    z-index: 2;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .logo {
-      height: 100%;
-      object-fit: cover;
-    }
-    nav {
-      display: flex;
-      align-items: center;
-      ul {
-        display: flex;
-        gap: var(--padding);
-        li {
-          color: #fff;
-          cursor: pointer;
-          transition: transform ease-out 200ms;
-          &:hover {
-            transform: scale(1.2);
-          }
-        }
-      }
-      button {
-        margin-left: calc(2 * var(--padding));
-        padding: calc(var(--padding) / 4);
-        border-radius: 5px;
-        background: #fff;
-        color: #000;
-        transition: all ease-out 200ms;
-        position: relative;
-
-        &::before {
-          content: "";
-          position: absolute;
-          top: 50%;
-          left: calc(-1 * var(--padding));
-          display: block;
-
-          width: 2px;
-          height: 70%;
-          background: #fff;
-          transform: translateY(-50%);
-        }
-      }
-    }
-  }
 
   main {
     width: 100%;
@@ -255,26 +204,30 @@ const StyledCreateTeam = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    overflow: hidden;
+
     .left {
-      width: 30%;
+      width: 35%;
       height: 100%;
       display: grid;
       place-items: center;
-      text-align: left;
+
       background: #f97171;
       padding: var(--padding);
       p {
-        font-size: clamp(1.5rem, 5vw, 5rem);
+        font-size: clamp(1.3rem, 5vw, 5rem);
         color: #fff;
         line-height: 1.1;
         font-weight: 600;
+        text-align: left;
         z-index: 2;
       }
       box-shadow: 8px 0px 12px rgba(0, 0, 0, 0.2);
       overflow: hidden;
     }
     .right {
-      width: 50%;
+      width: 60%;
       height: 100%;
       display: grid;
       place-items: center;
@@ -339,31 +292,25 @@ const StyledCreateTeam = styled.div`
         }
       }
     }
+
     @media only screen and (max-width: 500px) {
-      .left {
-        width: 40%;
-      }
-      .right {
-        width: 60%;
+      padding: var(--padding);
+      flex-direction: column;
 
-        form {
+      .left,
+      .right {
+        width: 100%;
+      }
+      .left {
+        height: 25%;
+        border-radius: 10px;
+        p {
           width: 100%;
-          height: 70%;
+          text-align: center;
         }
       }
-    }
-    @media only screen and (max-width: 400px) {
-      .left {
-        width: 35%;
-      }
       .right {
-        width: 65%;
-
-        form {
-          width: 100%;
-          height: 75%;
-          padding: calc(var(--padding) / 2);
-        }
+        height: 65%;
       }
     }
   }
