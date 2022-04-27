@@ -1,15 +1,17 @@
 import styled from "@emotion/styled"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import createTeamAPI from "../API/createTeam.api"
 import Header from "../Components/Header"
 import Spinner from "../Components/Loaders/spinner"
-import Modal from "../Components/Register/Modal"
+import RedirectModal from "../Components/Register/RedirectModal"
+import useTitle from "../Hooks/useTitle"
 
 const CreateTeam = () => {
   const [page, setPage] = useState(1)
   const [error, setError] = useState("")
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState("")
 
   const [input, setInput] = useState({
     teamName: "",
@@ -21,9 +23,7 @@ const CreateTeam = () => {
     year: "",
   })
 
-  useEffect(() => {
-    document.title = "WARTRADE • CREATE"
-  })
+  useTitle("WARTRADE 2.0 • CREATE")
 
   const changePage = (pageNumber: number) => setPage(pageNumber)
 
@@ -52,25 +52,26 @@ const CreateTeam = () => {
     setLoading(true)
     try {
       const res = await createTeamAPI(genPayload())
-      console.log(res)
+      setMessage(res)
       setSuccess(true)
     } catch (err: any) {
       setPage(1)
-      setInput({
-        teamName: "",
-        password: "",
-        name: "",
-        email: "",
-        phone: "",
-        branch: "",
-        year: "",
-      })
+      // setInput({
+      //   teamName: "",
+      //   password: "",
+      //   name: "",
+      //   email: "",
+      //   phone: "",
+      //   branch: "",
+      //   year: "",
+      // })
 
-      if (err.response && err.response.data && err.response.data.message)
+      if (err.response.data && err.response.data.message)
         setError(err.response.data.message)
+      else if (err.response.data && Array.isArray(err.response.data))
+        setError(err.response.data.join(", \n"))
       else setError("We Encountered an Error. Try Agin Later")
-      setTimeout(() => setError(""), 3000)
-      console.log(err)
+      console.log(err.response)
     } finally {
       setLoading(false)
     }
@@ -90,7 +91,6 @@ const CreateTeam = () => {
           <form onSubmit={submitHandler}>
             {page === 1 ? (
               <>
-                <div className="error">{error}</div>
                 <div className="inputContainer">
                   <label htmlFor="teamName">Your Team Name</label>
                   <input
@@ -180,7 +180,17 @@ const CreateTeam = () => {
           </form>
         </div>
       </main>
-      {success && <Modal message="Team Created Successfully" />}
+      {success && (
+        <RedirectModal success={true} message={message} navigateTo={"/"} />
+      )}
+      {error && (
+        <RedirectModal
+          success={false}
+          message={error}
+          navigateTo={""}
+          setError={setError}
+        />
+      )}
     </StyledCreateTeam>
   )
 }
@@ -248,10 +258,7 @@ const StyledCreateTeam = styled.div`
         > * + * {
           margin-top: clamp(0.5rem, 1vw, 1rem);
         }
-        .error {
-          font-size: clamp(0.8rem, 2vw, 1rem);
-          color: red;
-        }
+
         .inputContainer {
           width: 100%;
           > * + * {

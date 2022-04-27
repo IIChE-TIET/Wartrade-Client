@@ -65,7 +65,7 @@ const StyledHeader = styled.header`
       display: flex;
       gap: var(--padding);
       li {
-        font-size: clamp(0.8rem, 2vw, 1rem);
+        font-size: clamp(0.8rem, 2vw, 1.2rem);
         color: #fff;
         cursor: pointer;
         transition: transform ease-out 200ms;
@@ -80,7 +80,7 @@ const StyledHeader = styled.header`
     }
     button {
       margin-left: calc(2 * var(--padding));
-      font-size: clamp(0.7rem, 1.5vw, 1rem);
+      font-size: clamp(0.7rem, 1.5vw, 1.1rem);
       padding: calc(var(--padding) / 4);
       border-radius: 5px;
       background: #fff;

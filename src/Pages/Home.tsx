@@ -2,6 +2,7 @@ import styled from "@emotion/styled"
 import { AnimatePresence } from "framer-motion"
 import { useState } from "react"
 import LoginModal from "../Components/Home/LoginModal"
+import useTitle from "../Hooks/useTitle"
 import HomeBG from "../Sections/Home/Bg"
 import Contact from "../Sections/Home/Contact"
 import Countdown from "../Sections/Home/Countdown"
@@ -11,6 +12,8 @@ import Sponsors from "../Sections/Home/Sponsors"
 
 const Home = () => {
   const [loginVis, setLoginVis] = useState(false)
+
+  useTitle("WARTRADE 2.0")
 
   return (
     <StyledHome>

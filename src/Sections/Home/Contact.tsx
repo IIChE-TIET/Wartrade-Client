@@ -95,7 +95,8 @@ const StyledContactUs = styled.section`
     box-sizing: margin-box;
     .info {
       width: 60%;
-      font-size: clamp(0.9rem, 2vw, 1.5rem);
+      font-size: clamp(0.9rem, 2vw, 2rem);
+      line-height: 1.5;
     }
     .contact {
       ul {
@@ -108,11 +109,11 @@ const StyledContactUs = styled.section`
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          font-size: clamp(0.9rem, 2vw, 1.5rem);
+          font-size: clamp(0.9rem, 2vw, 1.75rem);
           display: flex;
           align-items: center;
           svg {
-            font-size: clamp(2rem, 3vw, 2.5rem);
+            font-size: clamp(2rem, 3vw, 3rem);
             margin-right: clamp(0.5rem, 1vw, 1rem);
           }
         }
@@ -120,7 +121,7 @@ const StyledContactUs = styled.section`
     }
   }
   .icons {
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
     display: flex;
     justify-content: space-between;
     width: 20%;

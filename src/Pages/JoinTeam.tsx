@@ -1,16 +1,18 @@
 import styled from "@emotion/styled"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { useParams } from "react-router-dom"
 import joinTeamAPI from "../API/joinTeam.api"
 import Header from "../Components/Header"
 import Spinner from "../Components/Loaders/spinner"
-import Modal from "../Components/Register/Modal"
+import RedirectModal from "../Components/Register/RedirectModal"
+import useTitle from "../Hooks/useTitle"
 
 const JoinTeam = () => {
   const [page, setPage] = useState(1)
   const [error, setError] = useState("")
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState("")
 
   const { teamCode } = useParams()
 
@@ -23,9 +25,7 @@ const JoinTeam = () => {
     year: "",
   })
 
-  useEffect(() => {
-    document.title = "WARTRADE • JOIN"
-  }, [])
+  useTitle("WARTRADE 2.0 • JOIN")
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setInput(input => ({ ...input, [e.target.name]: e.target.value }))
@@ -50,27 +50,25 @@ const JoinTeam = () => {
     setLoading(true)
     try {
       const res = await joinTeamAPI(genPayload())
-      console.log(res)
-
+      setMessage(res)
       setSuccess(true)
-      setLoading(false)
     } catch (err: any) {
       setPage(1)
-      setInput({
-        teamCode: teamCode || "",
-        name: "",
-        email: "",
-        phone: "",
+      // setInput({
+      //   teamCode: teamCode || "",
+      //   name: "",
+      //   email: "",
+      //   phone: "",
 
-        branch: "",
-        year: "",
-      })
-
-      if (err.response && err.response.data && err.response.data.message)
+      //   branch: "",
+      //   year: "",
+      // })
+      if (err.response.data && err.response.data.message)
         setError(err.response.data.message)
+      else if (err.response.data && Array.isArray(err.response.data))
+        setError(err.response.data.join(", \n"))
       else setError("We Encountered an Error. Try Agin Later")
-      setTimeout(() => setError(""), 3000)
-      console.log(err)
+      console.log(err.response)
     } finally {
       setLoading(false)
     }
@@ -85,7 +83,6 @@ const JoinTeam = () => {
           <form onSubmit={submitHandler}>
             {page === 1 ? (
               <>
-                <div className="error">{error}</div>
                 <div className="inputContainer">
                   <label htmlFor="teamCode">Team Code</label>
                   <input
@@ -173,7 +170,17 @@ const JoinTeam = () => {
           </p>
         </div>
       </main>
-      {success && <Modal message="Team Joined Successfully" />}
+      {success && (
+        <RedirectModal success={true} message={message} navigateTo={"/"} />
+      )}
+      {error && (
+        <RedirectModal
+          success={false}
+          message={error}
+          navigateTo={""}
+          setError={setError}
+        />
+      )}
     </StyledJoinTeam>
   )
 }

@@ -14,12 +14,13 @@ const HomeMain: React.FC<{
         <div className="content">
           <h1>WARTRADE 2.0</h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut sit a
-            magnam voluptate reprehenderit ea aut magni, nobis temporibus et
-            iure tempora! Omnis sunt quidem quae animi labore ut aliquam, vel
-            alias, sit pariatur ratione facilis sint vitae illum enim nesciunt
-            fugit doloremque quam temporibus quo veritatis ipsum quod?
-            Consectetur.
+            WarTrade offers the best platform for all the engineers and business
+            heads to showcase their Technical Knowledge and Persuasion Skills on
+            a global scale. Participants will be battling with other teams by
+            boasting their superior firepower in terms of bombs and negotiation
+            skills. Players will have to compete in a verbal cross-fire and
+            haggle in an intense tradewar with other countries as sudden crisis
+            strikes and political powerplay comes into action.
           </p>
           <button onClick={openModal} className="disabled" disabled>
             Login
@@ -80,7 +81,7 @@ const StyledHomeMain = styled.section`
         font-weight: 900;
       }
       p {
-        font-size: clamp(0.9rem, 2vw, 1.5rem);
+        font-size: clamp(0.9rem, 2vw, 1.65rem);
         line-height: 1.5;
       }
 
