@@ -57,6 +57,7 @@ const StyledRedirectModal = styled.section`
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
   z-index: 100;
+  padding: var(--padding);
   .RedirectModal {
     background: #fff;
     border-radius: 10px;
@@ -95,6 +96,10 @@ const StyledRedirectModal = styled.section`
     }
     .errorButton {
       background: #ff0000;
+    }
+
+    @media only screen and (max-width: 500px) {
+      width: 100%;
     }
   }
 `

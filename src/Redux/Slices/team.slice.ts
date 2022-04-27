@@ -3,19 +3,18 @@ import { RootState } from "../Store"
 
 export type team = {
   teamName: string
-  teamCode: string
+  code: string
 
-  leader: { name: string }
+  leaderName: string
   members: { name: string }[]
 }
 
 const initialState = {
   team: {
     teamName: "",
-    teamCode: "",
-    leader: {
-      name: "",
-    },
+    code: "",
+    leaderName: "",
+
     members: [],
     completed: false,
   } as team,

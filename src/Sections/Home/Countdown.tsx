@@ -2,7 +2,7 @@ import styled from "@emotion/styled"
 import { useEffect, useState } from "react"
 
 const Countdown = () => {
-  const countDownDate = new Date("MAY 01, 2022 14:00:00").getTime()
+  const countDownDate = new Date("MAY 08, 2022 12:00:00").getTime()
 
   const [days, setDays] = useState(0)
   const [minutes, setMinutes] = useState(0)

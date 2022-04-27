@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-concat */
 type Endpoint = {
   url: string
   method: Method
@@ -28,4 +29,14 @@ export const createTeamEndpoint: Endpoint = {
 export const joinTeamEndpoint: Endpoint = {
   url: baseUrl + "/join",
   method: Method.POST,
+}
+
+export const logoutEndpoint: Endpoint = {
+  url: baseUrl + "/private" + "/logout",
+  method: Method.GET,
+}
+
+export const profileEndpoint: Endpoint = {
+  url: baseUrl + "/private",
+  method: Method.GET,
 }

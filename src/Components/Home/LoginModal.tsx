@@ -2,7 +2,7 @@ import styled from "@emotion/styled"
 import { motion, Variants } from "framer-motion"
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import loginAPI from "../../API/login.api"
 import { login } from "../../Redux/Slices/authentication.slice"
 import { addteam } from "../../Redux/Slices/team.slice"
@@ -76,39 +76,42 @@ const LoginModal: React.FC<{
     >
       {loading && <Spinner />}
       <div className="modal" onClick={formClickHandler}>
-        <div className="left">
-          <h4>Ready to Roll</h4>
-        </div>
-        <div className="right">
-          <form onSubmit={submitHandler}>
-            {error && <div className="error">{error}</div>}
-            <div className="inputContainer">
-              <label htmlFor="teamName">Your Team Name</label>
-              <br />
-              <input
-                value={input.teamName}
-                onChange={changeHandler}
-                name="teamName"
-                autoFocus
-                type="text"
-                required
-              />
-            </div>
-            <div className="inputContainer">
-              <label htmlFor="password">Password</label>
-              <br />
-              <input
-                value={input.password}
-                onChange={changeHandler}
-                name="password"
-                type="password"
-                required
-              />
-            </div>
-            <span>Forgot Password?</span>
-            <button>Login</button>
-          </form>
-        </div>
+        <h2>Log in</h2>
+
+        <form onSubmit={submitHandler}>
+          {error && <div className="error">{error}</div>}
+          <div className="inputContainer">
+            <label htmlFor="teamName">Your Team Name</label>
+            <br />
+            <input
+              value={input.teamName}
+              onChange={changeHandler}
+              name="teamName"
+              autoFocus
+              type="text"
+              required
+            />
+          </div>
+          <div className="inputContainer">
+            <label htmlFor="password">Password</label>
+            <br />
+            <input
+              value={input.password}
+              onChange={changeHandler}
+              name="password"
+              type="password"
+              required
+            />
+          </div>
+          {/* <span>Forgot Password?</span> */}
+          <button>Login</button>
+        </form>
+        <span>
+          Don't have an account? &nbsp;
+          <Link to="/register" className="register">
+            Register Now
+          </Link>
+        </span>
       </div>
     </StyledLoginModal>
   )
@@ -119,90 +122,99 @@ const StyledLoginModal = styled(motion.section)`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   z-index: 999;
 
-  background: rgb(0, 0, 0, 0.5);
+  background: #0008;
   backdrop-filter: blur(5px);
 
   display: grid;
   place-items: center;
+  padding: 0 var(--padding);
 
   .modal {
-    width: 50%;
+    width: 35%;
     height: 60%;
 
-    background: var(--bg);
+    background: #fffc;
+    padding: var(--padding);
 
     border-radius: 20px;
 
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
 
     color: #1e190e;
     overflow: hidden;
-    .left {
-      flex: 0.3;
-      display: grid;
-      place-items: center;
-      padding: var(--padding);
-      background: var(--secondary);
-      color: #fff;
-      h4 {
-        max-width: min-content;
-        font-size: clamp(2rem, 4vw, 4rem);
+
+    color: #fff;
+    h2 {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      color: #200c44;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 1rem;
+
+      padding-top: 2rem;
+      border-top: 2px solid #200c44;
+
+      font-size: clamp(1rem, 2vw, 1.4rem);
+
+      .error {
+        font-size: 0.9rem;
+        color: red;
+        opacity: 0.9;
+      }
+      .inputContainer {
+        width: 100%;
+      }
+      label {
+        font-size: 1em;
+        color: #200c44;
+      }
+
+      input {
+        width: 100%;
+        font-size: 0.78em;
+
+        background: #c7c5da;
+        border-radius: 4px;
+        padding: 0.4rem;
+        color: #200c44;
+      }
+      span {
+        font-size: 0.64rem;
+        align-self: flex-end;
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+      button {
+        font-size: 0.78em;
+        border-radius: 4px;
+        padding: calc(var(--padding) / 6) calc(var(--padding) / 2);
+        background: #7e43e2;
       }
     }
 
-    .right {
-      flex: 0.7;
+    span,
+    a {
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      color: #7e43e2;
+    }
 
-      display: grid;
-      place-items: center;
-      padding: var(--padding);
-      form {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 1rem;
-
-        .error {
-          font-size: 0.9rem;
-          color: red;
-          opacity: 0.9;
-        }
-        .inputContainer {
-          width: 100%;
-        }
-        label {
-          font-size: 1.4rem;
-        }
-
-        input {
-          width: 100%;
-          font-size: 1.1rem;
-
-          background: #fff;
-          border-radius: 4px;
-          padding: 0.4rem;
-        }
-        span {
-          font-size: 0.9rem;
-          align-self: flex-end;
-          &:hover {
-            text-decoration: underline;
-            cursor: pointer;
-          }
-        }
-        button {
-          font-size: 1.1rem;
-          border-radius: 4px;
-          padding: calc(var(--padding) / 6) calc(var(--padding) / 2);
-          background: #ddd;
-        }
-      }
+    @media only screen and (max-width: 500px) {
+      width: 100%;
+      height: 60%;
+      border-radius: 10px;
     }
   }
 `

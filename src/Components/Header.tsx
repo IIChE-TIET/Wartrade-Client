@@ -1,12 +1,25 @@
 import styled from "@emotion/styled"
+import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
+import logoutAPI from "../API/logout.api"
+import { logout } from "../Redux/Slices/authentication.slice"
+import { resetteam } from "../Redux/Slices/team.slice"
 import iicheLogo from "./../Media/Logos/iiche.webp"
 import shortLogo from "./../Media/Logos/Logo.webp"
 
-const Header: React.FC<{ type: "HOME" | "REGISTER" }> = ({ type }) => {
+const Header: React.FC<{ type: "HOME" | "REGISTER" | "DASHBOARD" }> = ({
+  type,
+}) => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const navigateHome = () => navigate("/")
+
+  const logoutUser = async () => {
+    await logoutAPI()
+    dispatch(logout())
+    dispatch(resetteam())
+  }
 
   return (
     <StyledHeader>
@@ -16,16 +29,23 @@ const Header: React.FC<{ type: "HOME" | "REGISTER" }> = ({ type }) => {
         <img src={iicheLogo} alt="iichelogo" />
       </picture>
       <nav>
-        {type && (
+        {type === "HOME" && (
           <ul>
             <li>PRIZES</li>
             <li>SPONSORS</li>
             <li>CONTACT</li>
           </ul>
         )}
-        <Link to="/register">
-          <button type="button">REGISTER</button>
-        </Link>
+        {!(type === "DASHBOARD") && (
+          <Link to="/register">
+            <button type="button">REGISTER</button>
+          </Link>
+        )}
+        {type === "DASHBOARD" && (
+          <button type="button" onClick={logoutUser}>
+            Logout
+          </button>
+        )}
       </nav>
     </StyledHeader>
   )
@@ -65,7 +85,7 @@ const StyledHeader = styled.header`
       display: flex;
       gap: var(--padding);
       li {
-        font-size: clamp(0.8rem, 2vw, 1.2rem);
+        font-size: clamp(0.8rem, 2vw, 1rem);
         color: #fff;
         cursor: pointer;
         transition: transform ease-out 200ms;
@@ -80,13 +100,17 @@ const StyledHeader = styled.header`
     }
     button {
       margin-left: calc(2 * var(--padding));
-      font-size: clamp(0.7rem, 1.5vw, 1.1rem);
+      font-size: clamp(0.7rem, 1.5vw, 0.9rem);
       padding: calc(var(--padding) / 4);
       border-radius: 5px;
       background: #fff;
       color: #000;
       transition: all ease-out 200ms;
       position: relative;
+
+      &:hover {
+        background: lightsalmon;
+      }
 
       &::before {
         content: "";

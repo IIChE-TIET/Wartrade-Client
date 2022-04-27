@@ -137,6 +137,7 @@ const CreateTeam = () => {
                     onChange={changeHandler}
                     name="email"
                     required
+                    autoFocus
                   />
                 </div>
                 <div className="inputContainer">

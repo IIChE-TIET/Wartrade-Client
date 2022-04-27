@@ -5,7 +5,7 @@ import wartradeLogo from "./../../Media/Logos/wartradeLogo.webp"
 const HomeMain: React.FC<{
   setLoginVis: React.Dispatch<React.SetStateAction<boolean>>
 }> = ({ setLoginVis }) => {
-  const openModal = () => setLoginVis(!true)
+  const openModal = () => setLoginVis(true)
 
   return (
     <StyledHomeMain>
@@ -19,12 +19,10 @@ const HomeMain: React.FC<{
             a global scale. Participants will be battling with other teams by
             boasting their superior firepower in terms of bombs and negotiation
             skills. Players will have to compete in a verbal cross-fire and
-            haggle in an intense tradewar with other countries as sudden crisis
-            strikes and political powerplay comes into action.
+            haggle in an intense trade war with other countries as crisis
+            strikes, and political powerplay comes into action.
           </p>
-          <button onClick={openModal} className="disabled" disabled>
-            Login
-          </button>
+          <button onClick={openModal}>Login</button>
         </div>
         <img src={wartradeLogo} alt="wartrade logo" className="wartradeLogo" />
       </main>
@@ -76,18 +74,20 @@ const StyledHomeMain = styled.section`
 
       color: var(--text);
 
+      font-size: clamp(2rem, 5vw, 3.75rem);
+
       h1 {
-        font-size: clamp(2rem, 5vw, 5rem);
+        font-size: 1em;
         font-weight: 900;
       }
       p {
-        font-size: clamp(0.9rem, 2vw, 1.65rem);
+        font-size: 0.33em;
         line-height: 1.5;
       }
 
       button {
-        padding: calc(var(--padding) / 3) var(--padding);
-        font-size: clamp(0.8rem, 1.5vw, 1.5rem);
+        padding: calc(var(--padding) / 4) var(--padding);
+        font-size: 0.3em;
         border-radius: 5px;
         background: #d3c468;
         color: #000;

@@ -73,10 +73,13 @@ const StyledContactUs = styled.section`
   padding: var(--padding);
   z-index: 2;
   color: var(--text);
+
+  font-size: clamp(2.5rem, 5vw, 4rem);
+
   h2 {
     position: relative;
     font-weight: 500;
-    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-size: 1em;
 
     &::after {
       content: "";
@@ -92,10 +95,11 @@ const StyledContactUs = styled.section`
   .content {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     box-sizing: margin-box;
     .info {
       width: 60%;
-      font-size: clamp(0.9rem, 2vw, 2rem);
+      font-size: 0.4em;
       line-height: 1.5;
     }
     .contact {
@@ -104,56 +108,36 @@ const StyledContactUs = styled.section`
         > * + * {
           margin-top: 1rem;
         }
+        li {
+          font-size: 0.35em;
+          svg {
+            font-size: 1.7em;
+            margin-right: clamp(0.5rem, 1vw, 1rem);
+          }
+        }
         li,
         a {
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          font-size: clamp(0.9rem, 2vw, 1.75rem);
-          display: flex;
-          align-items: center;
-          svg {
-            font-size: clamp(2rem, 3vw, 3rem);
-            margin-right: clamp(0.5rem, 1vw, 1rem);
-          }
         }
       }
     }
   }
   .icons {
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-size: 0.5em;
     display: flex;
     justify-content: space-between;
-    width: 20%;
+    width: 17%;
     > * {
       transition: all 200ms;
       &:hover {
         transform: scale(1.2);
-        color: #303030;
+        color: #191919;
       }
     }
   }
-  picture {
-    position: absolute;
-    bottom: 0;
-    width: 20%;
-    right: 0;
-    overflow: hidden;
-    animation: woof 600ms linear infinite alternate;
-    @keyframes woof {
-      from {
-        transform: rotate(8deg);
-      }
-      to {
-        transform: rotate(12deg);
-      }
-    }
-    img {
-      display: block;
-      width: 100%;
-      object-fit: cover;
-    }
-  }
+
   @media only screen and (max-width: 500px) {
     .content {
       flex-direction: column;
@@ -166,10 +150,6 @@ const StyledContactUs = styled.section`
     }
     .icons {
       width: 50%;
-    }
-    picture {
-      width: 35%;
-      transform: rotate(10deg);
     }
   }
 `

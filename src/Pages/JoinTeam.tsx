@@ -138,6 +138,7 @@ const JoinTeam = () => {
                     value={input.branch}
                     onChange={changeHandler}
                     required
+                    autoFocus
                   />
                 </div>
                 <div className="inputContainer">

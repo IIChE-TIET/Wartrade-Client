@@ -16,6 +16,7 @@ const loginAPI = async (loginPayload: loginPayload) => {
         withCredentials: true,
       }
     )
+    console.log(res.data)
     return res.data
   } catch (err) {
     throw err
