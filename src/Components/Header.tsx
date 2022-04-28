@@ -31,9 +31,15 @@ const Header: React.FC<{ type: "HOME" | "REGISTER" | "DASHBOARD" }> = ({
       <nav>
         {type === "HOME" && (
           <ul>
-            <li>PRIZES</li>
-            <li>SPONSORS</li>
-            <li>CONTACT</li>
+            <li>
+              <a href="#prizes">PRIZES</a>
+            </li>
+            <li>
+              <a href="#sponsors">SPONSORS</a>
+            </li>
+            <li>
+              <a href="#contact">CONTACT</a>
+            </li>
           </ul>
         )}
         {!(type === "DASHBOARD") && (
@@ -68,6 +74,7 @@ const StyledHeader = styled.header`
   .logo {
     display: inline-block;
     height: 100%;
+    overflow: hidden;
 
     object-fit: cover;
     cursor: pointer;
@@ -123,6 +130,18 @@ const StyledHeader = styled.header`
         height: 70%;
         background: #fff;
         transform: translateY(-50%);
+      }
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    .logo {
+      height: 90%;
+    }
+
+    nav {
+      ul {
+        display: none;
       }
     }
   }

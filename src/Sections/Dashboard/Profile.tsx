@@ -40,7 +40,7 @@ const Profile = () => {
           <ol className="members">
             <li>{team.leaderName}</li>
             {team.members.map((member, index) => (
-              <li key={index}>{member.name}</li>
+              <li key={index}>{member}</li>
             ))}
           </ol>
         </div>
@@ -75,11 +75,7 @@ const Profile = () => {
 }
 
 const StyledProfile = styled.section`
-  --bg: linear-gradient(
-    -135deg,
-    rgba(255, 240, 130, 0.5),
-    rgba(242, 255, 58, 0.5)
-  );
+  --bg: #fff8;
   width: 100%;
   height: var(--profileHeight);
 

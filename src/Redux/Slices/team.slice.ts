@@ -6,7 +6,7 @@ export type team = {
   code: string
 
   leaderName: string
-  members: { name: string }[]
+  members: string[]
 }
 
 const initialState = {

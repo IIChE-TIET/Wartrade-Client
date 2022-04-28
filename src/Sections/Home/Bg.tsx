@@ -32,7 +32,10 @@ const HomeBG = () => (
 
 const StyledHomeBG = styled.div`
   position: absolute;
-  inset: 0;
+  width: 100%;
+  height: calc(100% - var(--header));
+  top: 0;
+  left: 0;
   .wave1 {
     position: absolute;
     top: 80vh;

@@ -4,7 +4,7 @@ import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter } from "react-icons/bs"
 
 const Contact = () => {
   return (
-    <StyledContactUs id="contact_us">
+    <StyledContactUs id="contact">
       <h2>Let's Talk</h2>
 
       <div className="content">
@@ -16,7 +16,11 @@ const Contact = () => {
           <ul>
             <li>
               <AiFillPhone className="phone" />
-              <span> Parth : +917986810284</span>
+              <p>
+                <span> Prachi : +917696351886</span>
+                <br />
+                <span> Aryan : +918146740057</span>
+              </p>
             </li>
 
             <li>
@@ -139,13 +143,18 @@ const StyledContactUs = styled.section`
   }
 
   @media only screen and (max-width: 500px) {
+    justify-content: center;
+    gap: 10%;
     .content {
       flex-direction: column;
+      justify-content: space-evenly;
+      align-items: flex-start;
       .info {
         width: 100%;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
       }
       .contact {
+        width: 100%;
       }
     }
     .icons {

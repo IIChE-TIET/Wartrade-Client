@@ -1,6 +1,7 @@
 import styled from "@emotion/styled"
 import { AnimatePresence } from "framer-motion"
 import { useState } from "react"
+import Header from "../Components/Header"
 import LoginModal from "../Components/Home/LoginModal"
 import useTitle from "../Hooks/useTitle"
 import HomeBG from "../Sections/Home/Bg"
@@ -18,6 +19,7 @@ const Home = () => {
   return (
     <StyledHome>
       <HomeBG />
+      <Header type="HOME" />
       <HomeMain setLoginVis={setLoginVis} />
       <AnimatePresence>
         {loginVis && <LoginModal setLoginVis={setLoginVis} />}
@@ -32,34 +34,14 @@ const Home = () => {
 
 const StyledHome = styled.div`
   width: 100%;
-  height: 500vh;
+  height: auto;
   overflow: hidden;
   background: var(--bg);
   position: relative;
-  .wave1 {
-    position: absolute;
-    top: 80vh;
-    left: 0;
-    transform: rotate(-27deg) scale(3) translate(0%, -10%);
-    fill: var(--secondary);
-  }
-  .wave2 {
-    position: absolute;
-    bottom: 80vh;
-    right: 0;
-    transform: rotate(-156deg) scale(2.5);
-    fill: var(--secondary);
-  }
-  .blur {
-    position: absolute;
-    width: 100%;
-    height: 500vh;
-    background: rgb(black, 0.1);
-    backdrop-filter: blur(150px);
-  }
 
+  --header: 12vh;
   @media only screen and (max-width: 500px) {
-    backdrop-filter: blur(50px);
+    --header: 10vh;
   }
 `
 

@@ -2,7 +2,7 @@ import styled from "@emotion/styled"
 
 const Sponsors = () => {
   return (
-    <StyledSponsors>
+    <StyledSponsors id="sponsors">
       <h1>OUR SPONSORS</h1>
       <h4>TO BE REVEALED SOON</h4>
     </StyledSponsors>

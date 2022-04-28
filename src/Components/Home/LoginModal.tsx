@@ -213,8 +213,10 @@ const StyledLoginModal = styled(motion.section)`
 
     @media only screen and (max-width: 500px) {
       width: 100%;
-      height: 60%;
+      height: 65%;
       border-radius: 10px;
+      gap: 0;
+      justify-content: space-evenly;
     }
   }
 `

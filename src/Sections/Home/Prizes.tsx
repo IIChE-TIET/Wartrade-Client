@@ -2,7 +2,7 @@ import styled from "@emotion/styled"
 
 const Prizes = () => {
   return (
-    <StyledPrizes>
+    <StyledPrizes id="prizes">
       <h1>Prizes</h1>
       <ul>
         <li>

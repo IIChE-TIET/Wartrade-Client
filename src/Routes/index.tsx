@@ -11,12 +11,11 @@ const JoinTeam = lazy(() => import("./../Pages/JoinTeam"))
 
 const Routes = (auth: auth, team: team): RouteObject[] => [
   {
-    path: "/",
+    path: "*",
     element: auth.loggedIn ? <Navigate to="/dashboard" /> : <Home />,
   },
   {
     path: "/register",
-
     element: auth.loggedIn ? <Navigate to="/dashboard" /> : <Register />,
   },
   {
