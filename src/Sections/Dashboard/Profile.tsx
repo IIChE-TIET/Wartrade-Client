@@ -2,10 +2,10 @@ import styled from "@emotion/styled"
 import { useRef } from "react"
 import { RiFileCopyLine } from "react-icons/ri"
 import { useSelector } from "react-redux"
-import { selectTeam } from "../../Redux/Slices/team.slice"
+import { selectTeam, team } from "../../Redux/Slices/team.slice"
 
 const Profile = () => {
-  const { team } = useSelector(selectTeam)
+  const team = useSelector(selectTeam).team as team | null
   const linkRef = useRef<HTMLInputElement>(null)
 
   const copy = () => {
@@ -22,7 +22,7 @@ const Profile = () => {
         await navigator.share({
           title: "Wartrade 2.0 Team Invite",
           text: `Join My Team ${team?.teamName}!!!`,
-          url: `   https://wartrade.netlify.app/join/${team.code}`,
+          url: `   https://wartrade.netlify.app/join/${team?.code}`,
         })
       }
       copy()
@@ -47,14 +47,14 @@ const Profile = () => {
         <div className="right">
           <div className="code">
             <h3>Guild Code</h3>
-            <span>{team.code}</span>
+            <span>{team?.code}</span>
           </div>
           <div className="share">
             <h3>Invite To Guild</h3>
             <div className="link">
               <div className="box">
                 <span>
-                  https://wartrade.netlify.app/register/join/{team.code}
+                  https://wartrade.netlify.app/register/join/{team?.code}
                   <input
                     type="text"
                     value={`   https://wartrade.netlify.app/register/join/${team?.code}`}
@@ -159,6 +159,7 @@ const StyledProfile = styled.section`
               width: 100%;
               height: 100%;
               line-height: 1;
+              display: inline-block;
               white-space: nowrap;
               display: flex;
               align-items: center;
