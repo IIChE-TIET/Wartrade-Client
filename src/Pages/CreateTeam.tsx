@@ -1,17 +1,15 @@
 import styled from "@emotion/styled"
 import React, { useState } from "react"
+import { useDispatch } from "react-redux"
 import createTeamAPI from "../API/createTeam.api"
 import Header from "../Components/Header"
-import Spinner from "../Components/Loaders/spinner"
-import RedirectModal from "../Components/RedirectModal"
 import useTitle from "../Hooks/useTitle"
+import { startLoading, stopLoading } from "../Redux/Slices/loading.slice"
+import { setSuccess } from "../Redux/Slices/modal.slice"
+import errorHandling from "../Util/errorHandling"
 
 const CreateTeam = () => {
   const [page, setPage] = useState(1)
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState("")
 
   const [input, setInput] = useState({
     teamName: "",
@@ -22,6 +20,8 @@ const CreateTeam = () => {
     branch: "",
     year: "",
   })
+
+  const dispatch = useDispatch()
 
   useTitle("WARTRADE 2.0 • CREATE")
 
@@ -47,39 +47,21 @@ const CreateTeam = () => {
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setError("")
-    setSuccess(false)
-    setLoading(true)
+
+    dispatch(startLoading())
     try {
       const res = await createTeamAPI(genPayload())
-      setMessage(res)
-      setSuccess(true)
+      dispatch(setSuccess({ message: res, navigateTo: "/" }))
     } catch (err: any) {
       setPage(1)
-      // setInput({
-      //   teamName: "",
-      //   password: "",
-      //   name: "",
-      //   email: "",
-      //   phone: "",
-      //   branch: "",
-      //   year: "",
-      // })
-
-      if (err.response.data && err.response.data.message)
-        setError(err.response.data.message)
-      else if (err.response.data && Array.isArray(err.response.data))
-        setError(err.response.data.join(", \n"))
-      else setError("We Encountered an Error. Try Agin Later")
-      console.log(err.response)
+      errorHandling(dispatch, err)
     } finally {
-      setLoading(false)
+      dispatch(stopLoading())
     }
   }
 
   return (
     <StyledCreateTeam>
-      {loading && <Spinner />}
       <Header type="REGISTER" />
       <main>
         <div className=" left">
@@ -181,17 +163,6 @@ const CreateTeam = () => {
           </form>
         </div>
       </main>
-      {success && (
-        <RedirectModal success={true} message={message} navigateTo={"/"} />
-      )}
-      {error && (
-        <RedirectModal
-          success={false}
-          message={error}
-          navigateTo={""}
-          setError={setError}
-        />
-      )}
     </StyledCreateTeam>
   )
 }

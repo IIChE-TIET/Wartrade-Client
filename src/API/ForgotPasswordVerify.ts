@@ -11,14 +11,15 @@ const forgotPasswordVerifyTokenAPI = async (
 ) => {
   try {
     const res = await axios[forgotPasswordVerifyTokenEndpoint.method]<{
-      message: string
-    }>(forgotPasswordVerifyTokenEndpoint.url, {
-      params: {
-        token: forgotPasswordVerifyTokenPayload.token,
-        teamName: forgotPasswordVerifyTokenPayload.teamName,
-      },
-    })
-    return res.data.message
+      id: string
+    }>(
+      forgotPasswordVerifyTokenEndpoint.url +
+        "/" +
+        forgotPasswordVerifyTokenPayload.teamName +
+        "/" +
+        forgotPasswordVerifyTokenPayload.token
+    )
+    return res.data.id
   } catch (err) {
     throw err
   }

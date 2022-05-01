@@ -1,35 +1,45 @@
 import styled from "@emotion/styled"
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useLayoutEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { useNavigate, useParams } from "react-router-dom"
+import forgotPasswordChangeAPI from "../API/ForgotPasswordChange.api"
 import forgotPasswordVerifyTokenAPI from "../API/ForgotPasswordVerify"
 import Header from "../Components/Header"
-import Spinner from "../Components/Loaders/spinner"
-import RedirectModal from "../Components/RedirectModal"
 import useTitle from "../Hooks/useTitle"
+import { startLoading, stopLoading } from "../Redux/Slices/loading.slice"
+import { setSuccess } from "../Redux/Slices/modal.slice"
+import errorHandling from "../Util/errorHandling"
 
 const ForgotPasswordVerify = () => {
   const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const [message, setMessage] = useState("")
+  const [id, setId] = useState("")
 
   const { token, teamName } = useParams()
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   useTitle("WARTRADE 2.0 • FORGOT-PASSWORD")
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    dispatch(startLoading())
     ;(async () => {
       try {
-        await forgotPasswordVerifyTokenAPI({
-          token: token || "",
-          teamName: teamName || "",
+        setId(
+          await forgotPasswordVerifyTokenAPI({
+            token: token || "",
+            teamName: teamName || "",
+          })
+        )
+      } catch (err: any) {
+        errorHandling(dispatch, err, () => {
+          return navigate("/")
         })
-        setLoading(false)
-      } catch (err) {
-        console.log(err)
+      } finally {
+        dispatch(stopLoading())
       }
     })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -37,31 +47,31 @@ const ForgotPasswordVerify = () => {
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
-    setError("")
+    dispatch(startLoading())
+
     try {
-      setSuccess(true)
+      console.log({ id })
+      dispatch(
+        setSuccess({
+          navigateTo: "/",
+          message: await forgotPasswordChangeAPI({ id, password }),
+        })
+      )
     } catch (err: any) {
-      if (err.response.data && err.response.data.message)
-        setError(err.response.data.message)
-      else if (err.response.data && Array.isArray(err.response.data))
-        setError(err.response.data.join(", \n"))
-      else setError("We Encountered an Error. Try Agin Later")
-      console.log(err.response)
+      errorHandling(dispatch, err)
     } finally {
-      setLoading(false)
+      dispatch(stopLoading())
     }
   }
 
   return (
     <StyledForgotPassword>
-      {loading && <Spinner />}
       <Header type="REGISTER"></Header>
       <main>
         <div className="modal">
           <h2>Reset Password</h2>
           <form onSubmit={submitHandler}>
-            <label htmlFor="password">Team Name: </label>
+            <label htmlFor="password">New Password: </label>
             <input
               type="password"
               onChange={changeHandler}
@@ -73,17 +83,6 @@ const ForgotPasswordVerify = () => {
           </form>
         </div>
       </main>
-      {success && (
-        <RedirectModal success={true} message={message} navigateTo={"/"} />
-      )}
-      {error && (
-        <RedirectModal
-          success={false}
-          message={error}
-          navigateTo={""}
-          setError={setError}
-        />
-      )}
     </StyledForgotPassword>
   )
 }

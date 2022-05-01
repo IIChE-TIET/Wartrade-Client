@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import loginAPI from "../../API/login.api"
 import { login } from "../../Redux/Slices/authentication.slice"
+import { startLoading, stopLoading } from "../../Redux/Slices/loading.slice"
 import { addteam } from "../../Redux/Slices/team.slice"
-import Spinner from "../Loaders/spinner"
 
 const LoginModal: React.FC<{
   setLoginVis: React.Dispatch<React.SetStateAction<boolean>>
@@ -16,7 +16,7 @@ const LoginModal: React.FC<{
     password: "",
   })
   const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+
   const navigate = useNavigate()
 
   const dispatch = useDispatch()
@@ -50,7 +50,7 @@ const LoginModal: React.FC<{
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      setLoading(true)
+      dispatch(startLoading())
       const { team } = await loginAPI(input)
       dispatch(login())
       dispatch(addteam(team))
@@ -62,7 +62,7 @@ const LoginModal: React.FC<{
       setTimeout(() => setError(""), 3000)
       console.log(err)
     } finally {
-      setLoading(false)
+      dispatch(stopLoading())
     }
   }
 
@@ -74,7 +74,6 @@ const LoginModal: React.FC<{
       exit="exit"
       onClick={closeModal}
     >
-      {loading && <Spinner />}
       <div className="modal" onClick={formClickHandler}>
         <h2>Log in</h2>
 
@@ -103,9 +102,9 @@ const LoginModal: React.FC<{
               required
             />
           </div>
-          {/* <span className="forgot">
+          <span className="forgot">
             <Link to="/forgotPassword">Forgot Password?</Link>
-          </span> */}
+          </span>
           <button>Login</button>
         </form>
         <span className="register">

@@ -1,22 +1,22 @@
 import styled from "@emotion/styled"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import getProfileAPI from "../API/getProfile.api"
 import Header from "../Components/Header"
-import Spinner from "../Components/Loaders/spinner"
 import { logout } from "../Redux/Slices/authentication.slice"
+import { startLoading, stopLoading } from "../Redux/Slices/loading.slice"
 import { addteam, selectTeam } from "../Redux/Slices/team.slice"
 import Profile from "../Sections/Dashboard/Profile"
 import dashboardBG from "./../Media/dashboard.jpg"
 
 const Dashboard = () => {
-  const [loading, setLoading] = useState(true)
   const { team } = useSelector(selectTeam)
   const dispatch = useDispatch()
   useEffect(() => {
+    dispatch(startLoading())
     const timeOut = setTimeout(() => {
       dispatch(logout())
-      setLoading(false)
+      dispatch(stopLoading())
     }, 5000)
 
     if (!team.teamName) {
@@ -24,7 +24,7 @@ const Dashboard = () => {
         try {
           dispatch(addteam(await getProfileAPI()))
           clearTimeout(timeOut)
-          setLoading(false)
+          dispatch(stopLoading())
         } catch (err) {
           console.log(err)
           dispatch(logout())
@@ -32,7 +32,7 @@ const Dashboard = () => {
       })()
     } else {
       clearTimeout(timeOut)
-      setLoading(false)
+      dispatch(stopLoading())
     }
 
     return () => {
@@ -43,7 +43,6 @@ const Dashboard = () => {
 
   return (
     <StyledDashboard>
-      {loading && <Spinner />}
       <img className="bg" src={dashboardBG} alt="" />
       <Header type="DASHBOARD" />
       <Profile team={team} />

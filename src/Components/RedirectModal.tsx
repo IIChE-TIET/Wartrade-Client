@@ -1,24 +1,23 @@
 import styled from "@emotion/styled"
 import React from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import { hide, selectModal } from "../Redux/Slices/modal.slice"
 import successImage from "./../Media/check.png"
 import errorImage from "./../Media/error.png"
 
-const RedirectModal: React.FC<{
-  success: boolean
-  message: string
-  navigateTo?: string
-  setError?: React.Dispatch<React.SetStateAction<string>>
-}> = ({ success, message, navigateTo, setError }) => {
+const RedirectModal = () => {
   const navigate = useNavigate()
+  const { modal } = useSelector(selectModal)
+  const dispatch = useDispatch()
 
   const idleNavigate = () => {
-    navigateTo &&
-      success &&
-      navigate(navigateTo, {
+    if (modal.callback) modal.callback()
+    if (modal.navigateTo)
+      navigate(modal.navigateTo, {
         replace: true,
       })
-    !success && setError && setError("")
+    dispatch(hide())
   }
 
   const stopPropogation = (e: React.MouseEvent) => {
@@ -28,16 +27,16 @@ const RedirectModal: React.FC<{
   return (
     <StyledRedirectModal onClick={idleNavigate}>
       <div className="RedirectModal" onClick={stopPropogation}>
-        {success ? (
+        {modal.type === "success" ? (
           <img src={successImage} alt="success check mark" />
         ) : (
           <img src={errorImage} alt="error" />
         )}
-        <h3>{success ? "Successful" : "Error"}</h3>
-        <span>{message}</span>
+        <h3>{modal.type === "success" ? "Successful" : "Error"}</h3>
+        <span>{modal.message}</span>
         <button
           type="button"
-          className={success ? "successButton" : "errorButton"}
+          className={modal.type === "success" ? "successButton" : "errorButton"}
           onClick={idleNavigate}
         >
           Continue

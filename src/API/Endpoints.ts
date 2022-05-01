@@ -50,3 +50,8 @@ export const forgotPasswordVerifyTokenEndpoint: Endpoint = {
   url: baseUrl + "/forgotPassword/verifyToken",
   method: Method.POST,
 }
+
+export const forgotPasswordChangeEndpoint: Endpoint = {
+  url: baseUrl + "/forgotPassword/change",
+  method: Method.POST,
+}

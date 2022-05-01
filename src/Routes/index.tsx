@@ -8,7 +8,8 @@ const Register = lazy(() => import("../Pages/Register"))
 const CreateTeam = lazy(() => import("./../Pages/CreateTeam"))
 const JoinTeam = lazy(() => import("./../Pages/JoinTeam"))
 const Dashboard = lazy(() => import("../Pages/Dashboard"))
-//const ForgotPassword = lazy(() => import("./../Pages/ForgotPassword"))
+const ForgotPassword = lazy(() => import("./../Pages/ForgotPassword"))
+const ForgotPasswordVerify = lazy(() => import("../Pages/ForgotPasswordVerify"))
 
 const Routes = (auth: auth, team: team): RouteObject[] => [
   {
@@ -26,13 +27,22 @@ const Routes = (auth: auth, team: team): RouteObject[] => [
   {
     path: "/join",
     element: auth.loggedIn ? <Navigate to="/dashboard" /> : <JoinTeam />,
-    children: [{ path: ":teamCode", element: <JoinTeam /> }],
+    children: [{ path: "/join/:teamCode", element: <CreateTeam /> }],
   },
-  // {
-  //   path: "/forgotPassword",
-  //   element: auth.loggedIn ? <Navigate to="/dashboard" /> : <ForgotPassword />,
-  //   //children: [{ path: "/", element: <ForgotPassword /> }],
-  // },
+  {
+    path: "/forgotPassword/:teamName/:token",
+    element: auth.loggedIn ? (
+      <Navigate to="/dashboard" />
+    ) : (
+      <ForgotPasswordVerify />
+    ),
+  },
+  {
+    path: "/forgotPassword",
+    element: auth.loggedIn ? <Navigate to="/dashboard" /> : <ForgotPassword />,
+    children: [{ path: ":token", element: <ForgotPasswordVerify /> }],
+  },
+
   {
     path: "/dashboard",
     element: auth.loggedIn ? <Dashboard /> : <Navigate to="/" />,

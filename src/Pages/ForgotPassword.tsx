@@ -1,45 +1,42 @@
 import styled from "@emotion/styled"
 import React, { useState } from "react"
+import { useDispatch } from "react-redux"
 import forgotPasswordGenTokenAPI from "../API/ForgotPasswordGenToken"
 import Header from "../Components/Header"
-import Spinner from "../Components/Loaders/spinner"
-import RedirectModal from "../Components/RedirectModal"
 import useTitle from "../Hooks/useTitle"
+import { startLoading, stopLoading } from "../Redux/Slices/loading.slice"
+import { setSuccess } from "../Redux/Slices/modal.slice"
+import errorHandling from "../Util/errorHandling"
 
 const ForgotPassword = () => {
   const [teamName, setTeamName] = useState("")
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState("")
 
   useTitle("WARTRADE 2.0 • FORGOT-PASSWORD")
+
+  const dispatch = useDispatch()
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setTeamName(e.target.value)
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
-    setError("")
+    dispatch(startLoading())
     try {
-      setMessage(await forgotPasswordGenTokenAPI({ teamName }))
-      setSuccess(true)
+      dispatch(
+        setSuccess({
+          message: await forgotPasswordGenTokenAPI({ teamName }),
+          navigateTo: "/",
+        })
+      )
     } catch (err: any) {
-      if (err.response.data && err.response.data.message)
-        setError(err.response.data.message)
-      else if (err.response.data && Array.isArray(err.response.data))
-        setError(err.response.data.join(", \n"))
-      else setError("We Encountered an Error. Try Agin Later")
-      console.log(err.response)
+      errorHandling(dispatch, err)
     } finally {
-      setLoading(false)
+      dispatch(stopLoading())
     }
   }
 
   return (
     <StyledForgotPassword>
-      {loading && <Spinner />}
       <Header type="REGISTER"></Header>
       <main>
         <div className="modal">
@@ -57,17 +54,6 @@ const ForgotPassword = () => {
           </form>
         </div>
       </main>
-      {success && (
-        <RedirectModal success={true} message={message} navigateTo={"/"} />
-      )}
-      {error && (
-        <RedirectModal
-          success={false}
-          message={error}
-          navigateTo={""}
-          setError={setError}
-        />
-      )}
     </StyledForgotPassword>
   )
 }
