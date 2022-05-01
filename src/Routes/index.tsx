@@ -8,7 +8,7 @@ const Register = lazy(() => import("../Pages/Register"))
 const CreateTeam = lazy(() => import("./../Pages/CreateTeam"))
 const JoinTeam = lazy(() => import("./../Pages/JoinTeam"))
 const Dashboard = lazy(() => import("../Pages/Dashboard"))
-const ForgotPassword = lazy(() => import("./../Pages/ForgotPassword"))
+//const ForgotPassword = lazy(() => import("./../Pages/ForgotPassword"))
 
 const Routes = (auth: auth, team: team): RouteObject[] => [
   {
