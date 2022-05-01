@@ -51,7 +51,7 @@ const LoginModal: React.FC<{
     e.preventDefault()
     try {
       setLoading(true)
-      const team = await loginAPI(input)
+      const { team } = await loginAPI(input)
       dispatch(login())
       dispatch(addteam(team))
       navigate("/dashboard")

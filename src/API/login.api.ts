@@ -9,13 +9,12 @@ export type loginPayload = {
 
 const loginAPI = async (loginPayload: loginPayload) => {
   try {
-    const res = await axios[loginEndpoint.method]<team>(
-      loginEndpoint.url,
-      loginPayload,
-      {
-        withCredentials: true,
-      }
-    )
+    const res = await axios[loginEndpoint.method]<{
+      message: string
+      team: team
+    }>(loginEndpoint.url, loginPayload, {
+      withCredentials: true,
+    })
     console.log(res.data)
     return res.data
   } catch (err) {

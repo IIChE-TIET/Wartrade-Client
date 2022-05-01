@@ -1,29 +1,43 @@
 import styled from "@emotion/styled"
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import getProfileAPI from "../API/getProfile.api"
 import Header from "../Components/Header"
 import Spinner from "../Components/Loaders/spinner"
 import { logout } from "../Redux/Slices/authentication.slice"
-import { addteam } from "../Redux/Slices/team.slice"
+import { addteam, selectTeam } from "../Redux/Slices/team.slice"
 import Profile from "../Sections/Dashboard/Profile"
 import dashboardBG from "./../Media/dashboard.jpg"
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true)
+  const { team } = useSelector(selectTeam)
   const dispatch = useDispatch()
   useEffect(() => {
     const timeOut = setTimeout(() => {
       dispatch(logout())
       setLoading(false)
     }, 5000)
-    ;(async () => {
-      try {
-        dispatch(addteam(await getProfileAPI()))
-        clearTimeout(timeOut)
-        setLoading(false)
-      } catch (err) {}
-    })()
+
+    if (!team.teamName) {
+      ;(async () => {
+        try {
+          dispatch(addteam(await getProfileAPI()))
+          clearTimeout(timeOut)
+          setLoading(false)
+        } catch (err) {
+          console.log(err)
+          dispatch(logout())
+        }
+      })()
+    } else {
+      clearTimeout(timeOut)
+      setLoading(false)
+    }
+
+    return () => {
+      clearTimeout(timeOut)
+    }
   }, [dispatch])
 
   return (
@@ -31,7 +45,7 @@ const Dashboard = () => {
       {loading && <Spinner />}
       <img className="bg" src={dashboardBG} alt="" />
       <Header type="DASHBOARD" />
-      <Profile />
+      <Profile team={team} />
     </StyledDashboard>
   )
 }

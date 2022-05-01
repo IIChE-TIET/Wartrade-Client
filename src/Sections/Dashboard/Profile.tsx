@@ -1,11 +1,9 @@
 import styled from "@emotion/styled"
 import { useRef } from "react"
 import { RiFileCopyLine } from "react-icons/ri"
-import { useSelector } from "react-redux"
-import { selectTeam, team } from "../../Redux/Slices/team.slice"
+import { team } from "../../Redux/Slices/team.slice"
 
-const Profile = () => {
-  const team = useSelector(selectTeam).team as team | null
+const Profile: React.FC<{ team: team }> = ({ team }) => {
   const linkRef = useRef<HTMLInputElement>(null)
 
   const copy = () => {
