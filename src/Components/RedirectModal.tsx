@@ -1,8 +1,8 @@
 import styled from "@emotion/styled"
 import React from "react"
 import { useNavigate } from "react-router-dom"
-import successImage from "./../../Media/check.png"
-import errorImage from "./../../Media/error.png"
+import successImage from "./../Media/check.png"
+import errorImage from "./../Media/error.png"
 
 const RedirectModal: React.FC<{
   success: boolean
@@ -36,6 +36,7 @@ const RedirectModal: React.FC<{
         <h3>{success ? "Successful" : "Error"}</h3>
         <span>{message}</span>
         <button
+          type="button"
           className={success ? "successButton" : "errorButton"}
           onClick={idleNavigate}
         >
@@ -69,7 +70,7 @@ const StyledRedirectModal = styled.section`
     justify-content: space-evenly;
     align-items: center;
 
-    padding: clamp(var(--padding) / 2);
+    padding: var(--padding);
 
     box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.2);
     img {
@@ -80,7 +81,8 @@ const StyledRedirectModal = styled.section`
       font-size: clamp(1.5rem, 3vw, 2.5rem);
     }
     span {
-      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      width: 100%;
+      font-size: clamp(1.25rem, 3vw, 1.55rem);
       font-weight: 100;
       white-space: pre-line;
     }

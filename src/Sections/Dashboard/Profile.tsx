@@ -31,15 +31,15 @@ const Profile = () => {
     }
   }
 
-  return team.teamName ? (
+  return (
     <StyledProfile>
-      <h1>Hello {team.teamName}</h1>
+      <h1>Hello {team?.teamName}</h1>
       <div className="content">
         <div className="left">
           <h3>Guild Members</h3>
           <ol className="members">
-            <li>{team.leaderName}</li>
-            {team.members.map((member, index) => (
+            <li>{team?.leaderName}</li>
+            {team?.members.map((member, index) => (
               <li key={index}>{member}</li>
             ))}
           </ol>
@@ -57,7 +57,7 @@ const Profile = () => {
                   https://wartrade.netlify.app/register/join/{team.code}
                   <input
                     type="text"
-                    value={`   https://wartrade.netlify.app/register/join/${team.code}`}
+                    value={`   https://wartrade.netlify.app/register/join/${team?.code}`}
                     ref={linkRef}
                     readOnly
                   />
@@ -71,7 +71,7 @@ const Profile = () => {
         </div>
       </div>
     </StyledProfile>
-  ) : null
+  )
 }
 
 const StyledProfile = styled.section`

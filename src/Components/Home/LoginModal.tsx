@@ -103,14 +103,13 @@ const LoginModal: React.FC<{
               required
             />
           </div>
-          {/* <span>Forgot Password?</span> */}
+          {/* <span className="forgot">
+            <Link to="/forgotPassword">Forgot Password?</Link>
+          </span> */}
           <button>Login</button>
         </form>
-        <span>
-          Don't have an account? &nbsp;
-          <Link to="/register" className="register">
-            Register Now
-          </Link>
+        <span className="register">
+          <Link to="/register">Don't have an account? Register Now</Link>
         </span>
       </div>
     </StyledLoginModal>
@@ -189,8 +188,8 @@ const StyledLoginModal = styled(motion.section)`
         padding: 0.4rem;
         color: #200c44;
       }
-      span {
-        font-size: 0.64rem;
+      .forgot {
+        font-size: 0.64em;
         align-self: flex-end;
         &:hover {
           text-decoration: underline;
@@ -202,6 +201,14 @@ const StyledLoginModal = styled(motion.section)`
         border-radius: 4px;
         padding: calc(var(--padding) / 6) calc(var(--padding) / 2);
         background: #7e43e2;
+      }
+    }
+
+    .register {
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      color: #7e43e2;
+      &:hover {
+        text-decoration: underline;
       }
     }
 

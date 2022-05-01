@@ -40,3 +40,13 @@ export const profileEndpoint: Endpoint = {
   url: baseUrl + "/private",
   method: Method.GET,
 }
+
+export const forgotPasswordGenTokenEndpoint: Endpoint = {
+  url: baseUrl + "/forgotPassword/generateToken",
+  method: Method.POST,
+}
+
+export const forgotPasswordVerifyTokenEndpoint: Endpoint = {
+  url: baseUrl + "/forgotPassword/verifyToken",
+  method: Method.POST,
+}

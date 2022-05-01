@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom"
 import joinTeamAPI from "../API/joinTeam.api"
 import Header from "../Components/Header"
 import Spinner from "../Components/Loaders/spinner"
-import RedirectModal from "../Components/Register/RedirectModal"
+import RedirectModal from "../Components/RedirectModal"
 import useTitle from "../Hooks/useTitle"
 
 const JoinTeam = () => {
