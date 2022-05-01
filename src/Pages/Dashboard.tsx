@@ -38,6 +38,7 @@ const Dashboard = () => {
     return () => {
       clearTimeout(timeOut)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])
 
   return (
