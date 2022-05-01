@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux"
 import getProfileAPI from "../API/getProfile.api"
 import Header from "../Components/Header"
 import Spinner from "../Components/Loaders/spinner"
+import { logout } from "../Redux/Slices/authentication.slice"
 import { addteam } from "../Redux/Slices/team.slice"
 import Profile from "../Sections/Dashboard/Profile"
 import dashboardBG from "./../Media/dashboard.jpg"
@@ -12,9 +13,14 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
   useEffect(() => {
+    const timeOut = setTimeout(() => {
+      dispatch(logout())
+      setLoading(false)
+    }, 5000)
     ;(async () => {
       try {
         dispatch(addteam(await getProfileAPI()))
+        clearTimeout(timeOut)
         setLoading(false)
       } catch (err) {}
     })()
