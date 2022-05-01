@@ -39,9 +39,10 @@ const Profile = () => {
           <h3>Guild Members</h3>
           <ol className="members">
             <li>{team?.leaderName}</li>
-            {team?.members.map((member, index) => (
-              <li key={index}>{member}</li>
-            ))}
+            {team?.members &&
+              team.members.map((member, index) => (
+                <li key={index}>{member}</li>
+              ))}
           </ol>
         </div>
         <div className="right">
