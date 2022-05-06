@@ -4,9 +4,15 @@ import { RootState } from "../Store"
 export type team = {
   teamName: string
   code: string
-
   leaderName: string
   members: string[]
+  money: number
+  infra: number
+  defensePoints: number
+  inAlliance: boolean
+  allianceWith: string
+  allowed: boolean
+  bombs: { bombName: string; quantity: number }[]
 }
 
 const initialState = {
@@ -14,9 +20,15 @@ const initialState = {
     teamName: "",
     code: "",
     leaderName: "",
-
     members: [],
+    money: 0,
+    infra: 0,
+    defensePoints: 0,
+    inAlliance: false,
+    allianceWith: "None",
     completed: false,
+    bombs: [],
+    allowed: false,
   } as team,
 }
 
@@ -25,7 +37,10 @@ export const teamSlice = createSlice({
   initialState: initialState,
   reducers: {
     addteam: (state, action: PayloadAction<team>) => {
-      state.team = { ...action.payload }
+      state.team = {
+        ...action.payload,
+        bombs: action.payload.bombs.filter(bomb => bomb.quantity > 0),
+      }
     },
 
     resetteam: state => {

@@ -1,13 +1,13 @@
 import styled from "@emotion/styled"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import getProfileAPI from "../API/getProfile.api"
-import Header from "../Components/Header"
-import { logout } from "../Redux/Slices/authentication.slice"
-import { startLoading, stopLoading } from "../Redux/Slices/loading.slice"
-import { addteam, selectTeam } from "../Redux/Slices/team.slice"
-import Profile from "../Sections/Dashboard/Profile"
-import dashboardBG from "./../Media/dashboard.jpg"
+import { Outlet } from "react-router-dom"
+import getProfileAPI from "../../API/getProfile.api"
+import Header from "../../Components/Header"
+import dashboardBG from "../../Media/dashboard.jpg"
+import { logout } from "../../Redux/Slices/authentication.slice"
+import { startLoading, stopLoading } from "../../Redux/Slices/loading.slice"
+import { addteam, selectTeam } from "../../Redux/Slices/team.slice"
 
 const Dashboard = () => {
   const { team } = useSelector(selectTeam)
@@ -45,14 +45,14 @@ const Dashboard = () => {
     <StyledDashboard>
       <img className="bg" src={dashboardBG} alt="" />
       <Header type="DASHBOARD" />
-      <Profile team={team} />
+      <Outlet />
     </StyledDashboard>
   )
 }
 
 const StyledDashboard = styled.section`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   position: relative;
   overflow: hidden;
   --header: 12vh;
@@ -66,7 +66,7 @@ const StyledDashboard = styled.section`
   .bg {
     position: absolute;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     object-fit: cover;
     filter: blur(10px);
   }

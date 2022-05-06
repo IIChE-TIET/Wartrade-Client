@@ -34,7 +34,7 @@ const Profile: React.FC<{ team: team }> = ({ team }) => {
       <h1>Hello {team?.teamName}</h1>
       <div className="content">
         <div className="left">
-          <h3>Guild Members</h3>
+          <h3>Team Members</h3>
           <ol className="members">
             <li>{team?.leaderName}</li>
             {team?.members &&
@@ -45,11 +45,11 @@ const Profile: React.FC<{ team: team }> = ({ team }) => {
         </div>
         <div className="right">
           <div className="code">
-            <h3>Guild Code</h3>
+            <h3>Team Code</h3>
             <span>{team?.code}</span>
           </div>
           <div className="share">
-            <h3>Invite To Guild</h3>
+            <h3>Invite To Team</h3>
             <div className="link">
               <div className="box">
                 <span>

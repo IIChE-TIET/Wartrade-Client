@@ -55,3 +55,28 @@ export const forgotPasswordChangeEndpoint: Endpoint = {
   url: baseUrl + "/forgotPassword/change",
   method: Method.POST,
 }
+
+export const buyBombsEndpoint: Endpoint = {
+  url: baseUrl + "/private" + "/buyBombs",
+  method: Method.POST,
+}
+
+export const buyDefenseEndpoint: Endpoint = {
+  url: baseUrl + "/private" + "/buyDefensePoints",
+  method: Method.POST,
+}
+
+export const attackEndpoint: Endpoint = {
+  url: baseUrl + "/private" + "/attack",
+  method: Method.POST,
+}
+
+export const allianceEndpoint: Endpoint = {
+  url: baseUrl + "/alliance",
+  method: Method.POST,
+}
+
+export const tradingEndpoint: Endpoint = {
+  url: baseUrl + "/trading",
+  method: Method.POST,
+}
