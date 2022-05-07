@@ -1,7 +1,8 @@
 import styled from "@emotion/styled"
 import { AnimatePresence } from "framer-motion"
 import { useState } from "react"
-import SideNav from "../../Components/Dashboard/SideNav"
+import { useSelector } from "react-redux"
+import { selectTeam } from "../../Redux/Slices/team.slice"
 import Attack from "../../Sections/Game/Attack"
 import BombsInfo from "../../Sections/Game/BombsInfo"
 import BuyBombs from "../../Sections/Game/BuyBombs"
@@ -9,22 +10,19 @@ import BuyDefensePoints from "../../Sections/Game/BuyDefensePoints"
 import CountryInfo from "../../Sections/Game/CountryInfo"
 
 const Game = () => {
-  const [sideBar, setSideBar] = useState(false)
-  const showSideBar = () => setSideBar(true)
-  const close = () => setSideBar(false)
-
   const [showBombs, setShowBombs] = useState(false)
+
+  const { round1, round2, round3 } = useSelector(selectTeam).team
 
   return (
     <StyledGame>
-      <CountryInfo setShowBombs={setShowBombs} showSideBar={showSideBar} />
+      <CountryInfo setShowBombs={setShowBombs} />
       <AnimatePresence>
-        {sideBar && <SideNav setShowBombs={setShowBombs} close={close} />}
         {showBombs && <BombsInfo setShowBombs={setShowBombs} />}
       </AnimatePresence>
-      <BuyBombs />
-      <BuyDefensePoints />
-      <Attack />
+      {(round1 || round3) && <BuyBombs />}
+      {(round1 || round2 || round3) && <BuyDefensePoints />}
+      {(round2 || round3) && <Attack />}
     </StyledGame>
   )
 }

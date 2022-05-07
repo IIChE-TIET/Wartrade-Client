@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
+import adminReducer from "../Slices/admin.slice"
 import authenticationReducer from "../Slices/authentication.slice"
 import loadingReducer from "../Slices/loading.slice"
 import modalReducer from "../Slices/modal.slice"
@@ -10,6 +11,7 @@ const store = configureStore({
     auth: authenticationReducer,
     loading: loadingReducer,
     modal: modalReducer,
+    admin: adminReducer,
   },
 })
 

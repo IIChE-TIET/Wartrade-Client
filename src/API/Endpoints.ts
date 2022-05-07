@@ -71,12 +71,27 @@ export const attackEndpoint: Endpoint = {
   method: Method.POST,
 }
 
+export const adminLoginEndpoint: Endpoint = {
+  url: baseUrl + "/adminLogin",
+  method: Method.POST,
+}
+
+export const adminSignupEndpoint: Endpoint = {
+  url: baseUrl + "/adminSignup",
+  method: Method.POST,
+}
+
+export const adminLogoutEndpoint: Endpoint = {
+  url: baseUrl + "/admin" + "/logout",
+  method: Method.GET,
+}
+
 export const allianceEndpoint: Endpoint = {
-  url: baseUrl + "/alliance",
+  url: baseUrl + "/admin" + "/alliance",
   method: Method.POST,
 }
 
 export const tradingEndpoint: Endpoint = {
-  url: baseUrl + "/trading",
+  url: baseUrl + "/admin" + "/trading",
   method: Method.POST,
 }

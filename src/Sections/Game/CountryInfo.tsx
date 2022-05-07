@@ -1,12 +1,10 @@
 import styled from "@emotion/styled"
-import { HiMenuAlt3 } from "react-icons/hi"
 import { useSelector } from "react-redux"
 import { selectTeam } from "../../Redux/Slices/team.slice"
 
 const CountryInfo: React.FC<{
-  showSideBar: () => void
   setShowBombs: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ showSideBar, setShowBombs }) => {
+}> = ({ setShowBombs }) => {
   const { team } = useSelector(selectTeam)
 
   const viewBombs = () => setShowBombs(true)
@@ -17,7 +15,6 @@ const CountryInfo: React.FC<{
         <h1>
           Country Name: <span>India</span>
         </h1>
-        <HiMenuAlt3 onClick={showSideBar} />
       </div>
       <div className="stats">
         <h2>Country Stats</h2>

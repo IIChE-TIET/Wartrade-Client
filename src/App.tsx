@@ -4,6 +4,7 @@ import { useRoutes } from "react-router-dom"
 import PageLoader from "./Components/Loaders/pageLoader"
 import Spinner from "./Components/Loaders/spinner"
 import RedirectModal from "./Components/RedirectModal"
+import { selectAdmin } from "./Redux/Slices/admin.slice"
 import { selectAuthentication } from "./Redux/Slices/authentication.slice"
 import { selectLoading } from "./Redux/Slices/loading.slice"
 import { selectModal } from "./Redux/Slices/modal.slice"
@@ -15,7 +16,8 @@ const App = () => {
   const { loading } = useSelector(selectLoading)
   const { modal } = useSelector(selectModal)
   const auth = useSelector(selectAuthentication)
-  const router = useRoutes(Routes(auth, team))
+  const admin = useSelector(selectAdmin)
+  const router = useRoutes(Routes(auth, admin, team))
 
   return (
     <div className="App">

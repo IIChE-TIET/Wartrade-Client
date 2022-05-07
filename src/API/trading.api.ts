@@ -13,7 +13,10 @@ const tradingAPI = async (input: input) => {
   try {
     const res = await axios[tradingEndpoint.method]<{ message: string }>(
       tradingEndpoint.url,
-      input
+      input,
+      {
+        withCredentials: true,
+      }
     )
     return res.data.message
   } catch (err) {

@@ -13,6 +13,10 @@ export type team = {
   allianceWith: string
   allowed: boolean
   bombs: { bombName: string; quantity: number }[]
+  gameStart: boolean
+  round1: boolean
+  round2: boolean
+  round3: boolean
 }
 
 const initialState = {
@@ -29,6 +33,10 @@ const initialState = {
     completed: false,
     bombs: [],
     allowed: false,
+    gameStart: false,
+    round1: false,
+    round2: false,
+    round3: false,
   } as team,
 }
 

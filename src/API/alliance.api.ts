@@ -7,7 +7,10 @@ const allianceAPI = async (input: input) => {
   try {
     const res = await axios[allianceEndpoint.method]<{ message: string }>(
       allianceEndpoint.url,
-      input
+      input,
+      {
+        withCredentials: true,
+      }
     )
     return res.data.message
   } catch (err) {

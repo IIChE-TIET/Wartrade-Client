@@ -8,7 +8,7 @@ const DashboardHome = () => {
   return (
     <>
       <Profile team={team} />
-      {team.allowed && <StartGame />}
+      {team.allowed && team.gameStart && <StartGame />}
     </>
   )
 }

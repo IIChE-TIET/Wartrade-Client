@@ -1,4 +1,5 @@
 import styled from "@emotion/styled"
+import { motion } from "framer-motion"
 import { GrClose } from "react-icons/gr"
 import { useSelector } from "react-redux"
 import { selectTeam } from "../../Redux/Slices/team.slice"
@@ -9,8 +10,29 @@ const BombsInfo: React.FC<{
   const { bombs } = useSelector(selectTeam).team
 
   const close = () => setShowBombs(false)
+
+  const variants = {
+    initial: {
+      x: "100%",
+      opacity: 0,
+    },
+    animate: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: {
+      x: "100%",
+      opacity: 0,
+    },
+  }
+
   return (
-    <StyledBombsInfo>
+    <StyledBombsInfo
+      variants={variants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+    >
       <main>
         <div className="header">
           <h1>Bombs Owned</h1>
@@ -33,7 +55,7 @@ const BombsInfo: React.FC<{
   )
 }
 
-const StyledBombsInfo = styled.section`
+const StyledBombsInfo = styled(motion.section)`
   position: fixed;
   top: 0;
   left: 0;

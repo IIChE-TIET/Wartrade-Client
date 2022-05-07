@@ -1,9 +1,13 @@
 import { lazy } from "react"
 import { Navigate, RouteObject } from "react-router-dom"
+import AdminDash from "../Pages/Admin/Dash"
+import AdminLogin from "../Pages/Admin/Login"
+import AdminSignup from "../Pages/Admin/Signup"
 import Alliance from "../Pages/Alliance"
 import DashboardHome from "../Pages/Dashboard/DashboardHome"
 import Game from "../Pages/Dashboard/Game"
 import Trading from "../Pages/Trading"
+import { adminI } from "../Redux/Slices/admin.slice"
 import { auth } from "../Redux/Slices/authentication.slice"
 import { team } from "../Redux/Slices/team.slice"
 
@@ -15,7 +19,7 @@ const Dashboard = lazy(() => import("../Pages/Dashboard/index"))
 const ForgotPassword = lazy(() => import("./../Pages/ForgotPassword"))
 const ForgotPasswordVerify = lazy(() => import("../Pages/ForgotPasswordVerify"))
 
-const Routes = (auth: auth, team: team): RouteObject[] => [
+const Routes = (auth: auth, admin: adminI, team: team): RouteObject[] => [
   {
     path: "*",
     element: auth.loggedIn ? <Navigate to="/dashboard" /> : <Home />,
@@ -54,17 +58,29 @@ const Routes = (auth: auth, team: team): RouteObject[] => [
       { path: "/dashboard", element: <DashboardHome />, index: true },
       {
         path: "/dashboard/game",
-        element: team.allowed ? <Game /> : <DashboardHome />,
+        element: team.allowed && team.gameStart ? <Game /> : <DashboardHome />,
       },
     ],
   },
   {
+    path: "/admin",
+    element: auth.loggedIn ? <Navigate to="/" /> : <AdminLogin />,
+  },
+  {
+    path: "/admin/signup",
+    element: auth.loggedIn ? <Navigate to="/" /> : <AdminSignup />,
+  },
+  {
+    path: "/admin/dash",
+    element: admin.loggedIn ? <AdminDash /> : <Navigate to="/admin" />,
+  },
+  {
     path: "/alliance",
-    element: auth.loggedIn || true ? <Navigate to="/" /> : <Alliance />,
+    element: auth.loggedIn ? <Navigate to="/" /> : <Alliance />,
   },
   {
     path: "/trading",
-    element: auth.loggedIn || true ? <Navigate to="/" /> : <Trading />,
+    element: auth.loggedIn ? <Navigate to="/" /> : <Trading />,
   },
 ]
 
