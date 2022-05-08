@@ -1,5 +1,6 @@
 import { lazy } from "react"
 import { Navigate, RouteObject } from "react-router-dom"
+import AssignCountry from "../Pages/Admin/AssignCountry"
 import AdminDash from "../Pages/Admin/Dash"
 import AdminLogin from "../Pages/Admin/Login"
 import AdminSignup from "../Pages/Admin/Signup"
@@ -7,6 +8,7 @@ import Alliance from "../Pages/Alliance"
 import DashboardHome from "../Pages/Dashboard/DashboardHome"
 import Game from "../Pages/Dashboard/Game"
 import Trading from "../Pages/Trading"
+import ViewTeams from "../Pages/ViewTeams"
 import { adminI } from "../Redux/Slices/admin.slice"
 import { auth } from "../Redux/Slices/authentication.slice"
 import { team } from "../Redux/Slices/team.slice"
@@ -60,6 +62,11 @@ const Routes = (auth: auth, admin: adminI, team: team): RouteObject[] => [
         path: "/dashboard/game",
         element: team.allowed && team.gameStart ? <Game /> : <DashboardHome />,
       },
+      {
+        path: "/dashboard/viewTeams",
+        element:
+          team.allowed && team.gameStart ? <ViewTeams /> : <DashboardHome />,
+      },
     ],
   },
   {
@@ -73,6 +80,10 @@ const Routes = (auth: auth, admin: adminI, team: team): RouteObject[] => [
   {
     path: "/admin/dash",
     element: admin.loggedIn ? <AdminDash /> : <Navigate to="/admin" />,
+  },
+  {
+    path: "/admin/country",
+    element: <AssignCountry />,
   },
   {
     path: "/alliance",

@@ -1,13 +1,16 @@
 import styled from "@emotion/styled"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import allianceAPI from "../../API/alliance.api"
+import assignCountryAPI from "../../API/Admin/assignCountry"
 import { startLoading, stopLoading } from "../../Redux/Slices/loading.slice"
 import { setSuccess } from "../../Redux/Slices/modal.slice"
 import errorHandling from "../../Util/errorHandling"
 
-const Alliance = () => {
-  const [input, setInput] = useState({ teamName1: "", teamName2: "" })
+const AssignCountry = () => {
+  const [input, setInput] = useState({
+    countryName: "",
+    teamName: "",
+  })
 
   const dispatch = useDispatch()
 
@@ -21,53 +24,57 @@ const Alliance = () => {
     try {
       dispatch(
         setSuccess({
-          message: await allianceAPI(input),
-          navigateTo: "/admin/dash",
+          message: await assignCountryAPI(input),
+          navigateTo: "/admin/country",
         })
       )
     } catch (err: any) {
       errorHandling(dispatch, err)
     } finally {
       dispatch(stopLoading())
-      setInput({ teamName1: "", teamName2: "" })
+      setInput({
+        countryName: "",
+        teamName: "",
+      })
     }
   }
 
   return (
-    <StyledAliiance>
-      <h1>Create Alliance</h1>
+    <StyledAssignCountry>
+      <h1>AssignCountry</h1>
       <form onSubmit={submitHandler}>
         <div className="inputContainer">
-          <label htmlFor="team1">Team 1</label>
+          <label htmlFor="countrySellingName">Country Name</label>
           <br />
           <input
             type="text"
             required
             autoFocus
-            name="teamName1"
-            value={input.teamName1}
+            name="countryName"
+            value={input.countryName}
             onChange={changeHandler}
           />
         </div>
         <div className="inputContainer">
-          <label htmlFor="team2">Team 2</label>
+          <label htmlFor="countryBuyingName">Team Name</label>
           <br />
           <input
             type="text"
             required
             autoFocus
-            name="teamName2"
-            value={input.teamName2}
+            name="teamName"
+            value={input.teamName}
             onChange={changeHandler}
           />
         </div>
-        <button>Create Alliance</button>
+
+        <button>Assign</button>
       </form>
-    </StyledAliiance>
+    </StyledAssignCountry>
   )
 }
 
-const StyledAliiance = styled.section`
+const StyledAssignCountry = styled.section`
   width: 100%;
   height: 100vh;
   display: flex;
@@ -109,4 +116,4 @@ const StyledAliiance = styled.section`
   }
 `
 
-export default Alliance
+export default AssignCountry

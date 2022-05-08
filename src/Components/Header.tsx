@@ -48,9 +48,18 @@ const Header: React.FC<{ type: "HOME" | "REGISTER" | "DASHBOARD" }> = ({
           </Link>
         )}
         {type === "DASHBOARD" && (
-          <button type="button" onClick={logoutUser}>
-            Logout
-          </button>
+          <>
+            <a
+              href="https://www.canva.com/design/DAE_SfBGQCw/w4GtSPNXtspSdko2zscf9g/view?utm_content=DAE_SfBGQCw&utm_campaign=designshare&utm_medium=link&utm_source=publishpresent"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <button>Rulebook</button>
+            </a>
+            <button type="button" onClick={logoutUser}>
+              Logout
+            </button>
+          </>
         )}
       </nav>
     </StyledHeader>
@@ -105,6 +114,7 @@ const StyledHeader = styled.header`
         display: none;
       }
     }
+
     button {
       margin-left: calc(2 * var(--padding));
       font-size: clamp(0.7rem, 1.5vw, 0.9rem);
@@ -114,11 +124,6 @@ const StyledHeader = styled.header`
       color: #000;
       transition: all ease-out 200ms;
       position: relative;
-
-      &:hover {
-        background: lightsalmon;
-      }
-
       &::before {
         content: "";
         position: absolute;
@@ -131,6 +136,13 @@ const StyledHeader = styled.header`
         background: #fff;
         transform: translateY(-50%);
       }
+      &:hover {
+        background: lightsalmon;
+      }
+    }
+
+    a button::before {
+      display: none;
     }
   }
 

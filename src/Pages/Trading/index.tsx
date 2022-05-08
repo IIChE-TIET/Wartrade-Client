@@ -1,7 +1,9 @@
 import styled from "@emotion/styled"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
+import Select, { SingleValue } from "react-select"
 import tradingAPI from "../../API/trading.api"
+import allBombs from "../../BombsData/Bombs"
 import { startLoading, stopLoading } from "../../Redux/Slices/loading.slice"
 import { setSuccess } from "../../Redux/Slices/modal.slice"
 import errorHandling from "../../Util/errorHandling"
@@ -17,8 +19,19 @@ const Trading = () => {
 
   const dispatch = useDispatch()
 
+  const options = allBombs
+    .map(pool => {
+      const keys = Object.keys(pool.bombs)
+      return [...keys.map(k => ({ value: k, label: k }))]
+    })
+    .flat()
+
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setInput(input => ({ ...input, [e.target.name]: e.target.value }))
+
+  const bombHandler = (e: SingleValue<{ value: string; label: string }>) => {
+    if (e?.value) setInput(input => ({ ...input, bombName: e.value }))
+  }
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -28,7 +41,7 @@ const Trading = () => {
       dispatch(
         setSuccess({
           message: await tradingAPI(input),
-          navigateTo: "/trading",
+          navigateTo: "/admin/dash",
         })
       )
     } catch (err: any) {
@@ -76,13 +89,12 @@ const Trading = () => {
         <div className="inputContainer">
           <label htmlFor="bombName">Bomb Name</label>
           <br />
-          <input
-            type="text"
-            required
-            autoFocus
-            name="bombName"
-            value={input.bombName}
-            onChange={changeHandler}
+          <Select
+            options={options}
+            isClearable={true}
+            onChange={bombHandler}
+            placeholder="Bomb Name"
+            value={{ label: input.bombName, value: input.bombName }}
           />
         </div>
         <div className="inputContainer">

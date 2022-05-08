@@ -11,7 +11,7 @@ enum Method {
   "DELETE" = "delete",
 }
 
-const baseUrl =
+export const baseUrl =
   process.env.NODE_ENV !== "production"
     ? "http://localhost:5000"
     : "https://wartrade.herokuapp.com"
@@ -93,5 +93,15 @@ export const allianceEndpoint: Endpoint = {
 
 export const tradingEndpoint: Endpoint = {
   url: baseUrl + "/admin" + "/trading",
+  method: Method.POST,
+}
+
+export const viewTeamsEndpoint: Endpoint = {
+  url: baseUrl + "/view",
+  method: Method.GET,
+}
+
+export const assignCountryEndpoint: Endpoint = {
+  url: baseUrl + "/admin" + "/assignCountry",
   method: Method.POST,
 }

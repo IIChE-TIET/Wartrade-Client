@@ -3,6 +3,7 @@ import { RootState } from "../Store"
 
 export type team = {
   teamName: string
+  countryName: string
   code: string
   leaderName: string
   members: string[]
@@ -17,11 +18,13 @@ export type team = {
   round1: boolean
   round2: boolean
   round3: boolean
+  logs: { logType: string; message: string }[]
 }
 
 const initialState = {
   team: {
     teamName: "",
+    countryName: "",
     code: "",
     leaderName: "",
     members: [],
@@ -37,6 +40,7 @@ const initialState = {
     round1: false,
     round2: false,
     round3: false,
+    logs: [],
   } as team,
 }
 

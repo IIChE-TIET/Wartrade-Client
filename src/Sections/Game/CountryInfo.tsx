@@ -1,11 +1,17 @@
 import styled from "@emotion/styled"
+import { useState } from "react"
+import { BsClockHistory } from "react-icons/bs"
 import { useSelector } from "react-redux"
+import History from "../../Components/Dashboard/History"
 import { selectTeam } from "../../Redux/Slices/team.slice"
-
 const CountryInfo: React.FC<{
   setShowBombs: React.Dispatch<React.SetStateAction<boolean>>
 }> = ({ setShowBombs }) => {
   const { team } = useSelector(selectTeam)
+  const [showLogs, setShowLogs] = useState(false)
+
+  const show = () => setShowLogs(true)
+  const close = () => setShowLogs(false)
 
   const viewBombs = () => setShowBombs(true)
 
@@ -13,7 +19,7 @@ const CountryInfo: React.FC<{
     <StyledCountryInfo>
       <div className="header">
         <h1>
-          Country Name: <span>India</span>
+          Country Name: <span>{team.countryName}</span>
         </h1>
       </div>
       <div className="stats">
@@ -43,10 +49,22 @@ const CountryInfo: React.FC<{
             <h4>
               Allianced with: <span>{team.allianceWith}</span>
             </h4>
+            <br />
+            <h4 className="history" onClick={show}>
+              Country History <BsClockHistory />
+            </h4>
           </div>
         </div>
       </div>
-      <button onClick={viewBombs}>VIEW BOMBS</button>
+      <div className="buttons">
+        <a href="/dashboard/viewTeams" target="_blank">
+          <button> View Teams</button>
+        </a>
+        <button className="viewBombs" onClick={viewBombs}>
+          VIEW BOMBS
+        </button>
+      </div>
+      {showLogs && <History close={close} logs={team.logs} />}
     </StyledCountryInfo>
   )
 }
@@ -110,18 +128,36 @@ const StyledCountryInfo = styled.section`
         max-width: 45%;
       }
 
-      h4 {
+      h4,
+      svg {
         font-size: clamp(1.2rem, 2vw, 1.5rem);
+      }
+      .history {
+        text-decoration: underline !important;
+        cursor: pointer;
+        svg {
+          color: var(--text);
+        }
       }
     }
   }
-  button {
+  .buttons {
     align-self: center;
-    display: inline-block;
-    background: linear-gradient(90deg, #f857a6 0%, #ff5858 100%);
-    border-radius: 6px;
-    color: #fff;
-    padding: calc(var(--padding) / 2) calc(var(--padding));
+    > * + * {
+      margin-left: 1rem;
+    }
+    button {
+      align-self: center;
+      display: inline-block;
+      background: linear-gradient(to right, #fdc830, #f37335);
+      border-radius: 6px;
+      color: #fff;
+      padding: calc(var(--padding) / 2) calc(var(--padding));
+    }
+
+    .viewBombs {
+      background: linear-gradient(90deg, #f857a6 0%, #ff5858 100%);
+    }
   }
 `
 

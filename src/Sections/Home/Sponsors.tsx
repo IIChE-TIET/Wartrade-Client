@@ -1,10 +1,11 @@
 import styled from "@emotion/styled"
+import sponsorsPNG from "./../../Media/sponsors.png"
 
 const Sponsors = () => {
   return (
     <StyledSponsors id="sponsors">
       <h1>OUR SPONSORS</h1>
-      <h4>TO BE REVEALED SOON</h4>
+      <img src={sponsorsPNG} alt="" />
     </StyledSponsors>
   )
 }
@@ -25,11 +26,9 @@ const StyledSponsors = styled.section`
 
   font-size: clamp(1.3rem, 2vw, 2rem);
   padding: var(--padding);
-  h4 {
+  img {
     width: 100%;
-    font-family: var(--normalFont);
-    font-size: 1.8em;
-    text-align: center;
+    object-fit: cover;
   }
 `
 

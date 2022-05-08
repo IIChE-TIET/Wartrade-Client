@@ -1,8 +1,9 @@
 import styled from "@emotion/styled"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Outlet } from "react-router-dom"
 import getProfileAPI from "../../API/getProfile.api"
+import Crash from "../../Components/Dashboard/Crash"
 import Header from "../../Components/Header"
 import dashboardBG from "../../Media/dashboard.jpg"
 import { logout } from "../../Redux/Slices/authentication.slice"
@@ -10,7 +11,9 @@ import { startLoading, stopLoading } from "../../Redux/Slices/loading.slice"
 import { addteam, selectTeam } from "../../Redux/Slices/team.slice"
 
 const Dashboard = () => {
+  const [showAttack, setShowAttack] = useState(false)
   const { team } = useSelector(selectTeam)
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(startLoading())
@@ -22,12 +25,15 @@ const Dashboard = () => {
     if (!team.teamName) {
       ;(async () => {
         try {
-          dispatch(addteam(await getProfileAPI()))
+          const res = await getProfileAPI()
+
+          dispatch(addteam(res))
           clearTimeout(timeOut)
-          dispatch(stopLoading())
         } catch (err) {
           console.log(err)
           dispatch(logout())
+        } finally {
+          dispatch(stopLoading())
         }
       })()
     } else {
@@ -46,6 +52,7 @@ const Dashboard = () => {
       <img className="bg" src={dashboardBG} alt="" />
       <Header type="DASHBOARD" />
       <Outlet />
+      {showAttack && <Crash setShowAttack={setShowAttack} />}
     </StyledDashboard>
   )
 }
